@@ -1,0 +1,3 @@
+onlyBuiltDependencies:
+  - '@uni-helper/unocss-preset-uni'
+  - vue-demi

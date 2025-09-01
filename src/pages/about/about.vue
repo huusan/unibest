@@ -2,8 +2,6 @@
 import { isApp, isAppAndroid, isAppHarmony, isAppIOS, isAppPlus, isH5, isMpWeixin, isWeb } from '@uni-helper/uni-env'
 import { LOGIN_PAGE } from '@/router/config'
 import { tabbarStore } from '@/tabbar/store'
-import RequestComp from './components/request.vue'
-import VBindCss from './components/VBindCss.vue'
 
 definePage({
   style: {
@@ -94,8 +92,7 @@ onShow(() => {
     <button class="mt-4 w-60 text-center" @click="setTabbarBadge">
       设置tabbarBadge
     </button>
-    <RequestComp />
-    <VBindCss />
+
     <view class="mb-6 h-1px bg-#eee" />
     <view class="text-center">
       <button type="primary" size="mini" class="w-160px" @click="gotoAlova">

@@ -92,18 +92,18 @@ export const navigateToInterceptor = {
 
     // #region 2/2 不需要登录的情况(黑名单策略) ---------------------------
     else {
+      // 如果当前路由是登录页，那就重定向走
+      const { path, query } = parseUrlToObj(redirectUrl)
+      if (path === LOGIN_PAGE) {
+        console.log('path:', path)
+        console.log('query:', query)
+        uni.navigateTo({ url: query.redirect })
+        return false // 明确表示阻止原路由继续执行
+      }
       // 不需要登录里面的 EXCLUDE_LOGIN_PATH_LIST 表示黑名单，需要重定向到登录页
       if (judgeIsExcludePath(path)) {
         FG_LOG_ENABLE && console.log('2 isNeedLogin(黑名单策略) redirectUrl:', redirectUrl)
 
-        // 如果当前路由是登录页，那就重定向走
-        const { path, query } = parseUrlToObj(redirectUrl)
-        if (path === LOGIN_PAGE) {
-          console.log('path:', path)
-          console.log('query:', query)
-          uni.navigateTo({ url: query.redirect })
-          return false // 明确表示阻止原路由继续执行
-        }
         uni.navigateTo({ url: redirectUrl })
         return false // 修改为false，阻止原路由继续执行
       }

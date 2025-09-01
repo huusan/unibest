@@ -1,4 +1,4 @@
-import type { IAuthLoginRes } from '@/api/types/login'
+import type { IAuthLoginRes, ILoginForm } from '@/api/types/login'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue' // 修复：导入 computed
 import {
@@ -92,16 +92,11 @@ export const useTokenStore = defineStore(
      * @param credentials 登录参数
      * @returns 登录结果
      */
-    const login = async (credentials: {
-      username: string
-      password: string
-      code: string
-      uuid: string
-    }) => {
+    const login = async (credentials: ILoginForm) => {
       try {
         const res = await _login(credentials)
         console.log('普通登录-res: ', res)
-        await _postLogin(res.data)
+        await _postLogin(res)
         uni.showToast({
           title: '登录成功',
           icon: 'success',
@@ -129,7 +124,7 @@ export const useTokenStore = defineStore(
         console.log('微信登录-code: ', code)
         const res = await _wxLogin(code)
         console.log('微信登录-res: ', res)
-        await _postLogin(res.data)
+        await _postLogin(res)
         uni.showToast({
           title: '登录成功',
           icon: 'success',
@@ -185,7 +180,7 @@ export const useTokenStore = defineStore(
         const refreshToken = tokenInfo.value.refreshToken
         const res = await _refreshToken(refreshToken)
         console.log('刷新token-res: ', res)
-        setTokenInfo(res.data)
+        setTokenInfo(res)
         return res
       }
       catch (error) {

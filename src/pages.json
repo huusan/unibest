@@ -69,13 +69,6 @@
       }
     },
     {
-      "path": "pages/about/vue-query",
-      "type": "page",
-      "style": {
-        "navigationBarTitleText": "Vue Query 演示"
-      }
-    },
-    {
       "path": "pages/login/login",
       "type": "page",
       "style": {
@@ -97,18 +90,5 @@
       }
     }
   ],
-  "subPackages": [
-    {
-      "root": "pages-sub",
-      "pages": [
-        {
-          "path": "demo/index",
-          "type": "page",
-          "style": {
-            "navigationBarTitleText": "分包页面"
-          }
-        }
-      ]
-    }
-  ]
+  "subPackages": []
 }

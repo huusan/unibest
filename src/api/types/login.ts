@@ -79,6 +79,16 @@ export interface IUpdatePassword {
 }
 
 /**
+ * 登录表单
+ */
+export interface ILoginForm {
+  username: string
+  password: string
+  code: string
+  uuid: string
+}
+
+/**
  * 判断是否为单Token响应
  * @param tokenRes 登录响应数据
  * @returns 是否为单Token响应
