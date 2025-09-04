@@ -85,7 +85,7 @@ export const customTabbarList: CustomTabBarItem[] = [
 
   {
     text: '添加',
-    pagePath: 'pages/login/login',
+    pagePath: 'pages/login/register',
     // 注意 unocss 图标需要如下处理：（二选一）
     // 1）在fg-tabbar.vue页面上引入一下并注释掉（见tabbar/index.vue代码第2行）
     // 2）配置到 unocss.config.ts 的 safelist 中
@@ -96,7 +96,7 @@ export const customTabbarList: CustomTabBarItem[] = [
   },
   {
     text: '登录',
-    pagePath: 'pages/login/register',
+    pagePath: 'pages/about/alova',
     // 注意 unocss 图标需要如下处理：（二选一）
     // 1）在fg-tabbar.vue页面上引入一下并注释掉（见tabbar/index.vue代码第2行）
     // 2）配置到 unocss.config.ts 的 safelist 中

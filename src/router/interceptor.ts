@@ -16,6 +16,8 @@ export function judgeIsExcludePath(path: string) {
     return EXCLUDE_LOGIN_PATH_LIST.includes(path)
   }
   const allExcludeLoginPages = getAllPages('excludeLoginPath') // dev 环境下，需要每次都重新获取，否则新配置就不会生效
+  console.log(EXCLUDE_LOGIN_PATH_LIST)
+  console.log(allExcludeLoginPages)
   return EXCLUDE_LOGIN_PATH_LIST.includes(path) || (isDev && allExcludeLoginPages.some(page => page.path === path))
 }
 
@@ -55,13 +57,14 @@ export const navigateToInterceptor = {
     isDev && console.log('tokenStore.hasLogin:', tokenStore.hasLogin)
 
     // 不管黑白名单，登录了就直接去吧（但是当前不能是登录页）
-    if (tokenStore.hasLogin) {
+    if (tokenStore.hasLogin || !isNeedLoginMode) {
       if (path !== LOGIN_PAGE) {
         return true // 明确表示允许路由继续执行
       }
       else {
         console.log('已经登录，但是还在登录页', myQuery.redirect)
         const url = myQuery.redirect || HOME_PAGE
+        console.log('已经登录，但是还在登录页', url)
         if (isPageTabbar(url)) {
           uni.switchTab({ url })
         }
@@ -77,6 +80,7 @@ export const navigateToInterceptor = {
       fullPath += `?${Object.keys(myQuery).map(key => `${key}=${myQuery[key]}`).join('&')}`
     }
     const redirectUrl = `${LOGIN_PAGE}?redirect=${encodeURIComponent(fullPath)}`
+    isDev && console.log('redirectUrl:', redirectUrl)
 
     // #region 1/2 需要登录的情况(白名单策略) ---------------------------
     if (isNeedLoginMode) {
@@ -98,14 +102,6 @@ export const navigateToInterceptor = {
 
     // #region 2/2 不需要登录的情况(黑名单策略) ---------------------------
     else {
-      // 如果当前路由是登录页，那就重定向走
-      const { path, query } = parseUrlToObj(redirectUrl)
-      if (path === LOGIN_PAGE) {
-        console.log('path:', path)
-        console.log('query:', query)
-        uni.navigateTo({ url: query.redirect })
-        return false // 明确表示阻止原路由继续执行
-      }
       // 不需要登录里面的 EXCLUDE_LOGIN_PATH_LIST 表示黑名单，需要重定向到登录页
       if (judgeIsExcludePath(path)) {
         isDev && console.log('2 isNeedLogin(黑名单策略) redirectUrl:', redirectUrl)
