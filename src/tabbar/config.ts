@@ -22,7 +22,7 @@ export const TABBAR_STRATEGY_MAP = {
 // 如果是使用 CUSTOM_TABBAR(2,3)，只需要配置 customTabbarList，nativeTabbarList 不生效
 export const selectedTabbarStrategy = TABBAR_STRATEGY_MAP.CUSTOM_TABBAR_WITH_CACHE
 
-type NativeTabBarItem = TabBar['list'][number]
+type NativeTabBarItem = TabBar[ 'list' ][ number ]
 
 // TODO: 2/3. 使用 NATIVE_TABBAR 时，更新下面的 tabbar 配置
 export const nativeTabbarList: NativeTabBarItem[] = [
@@ -49,11 +49,12 @@ export const nativeTabbarList: NativeTabBarItem[] = [
 // badge 显示一个数字或 小红点（样式可以直接在 tabbar/index.vue 里面修改）
 export type CustomTabBarItemBadge = number | 'dot'
 
+export type iconType = 'uniUi' | 'uiLib' | 'unocss' | 'iconfont' | 'image'
 export interface CustomTabBarItem {
   text: string
   pagePath: string
-  iconType: 'uniUi' | 'uiLib' | 'unocss' | 'iconfont' | 'image' // 不建议用 image 模式，需要配置2张图
-  icon: any // 其实是 string 类型，这里是为了避免 ts 报错 (tabbar/index.vue 里面 uni-icons 那行)
+  iconType: iconType// 不建议用 image 模式，需要配置2张图
+  icon: string
   iconActive?: string // 只有在 image 模式下才需要，传递的是高亮的图片（PS： 不建议用 image 模式）
   badge?: CustomTabBarItemBadge
   isBulge?: boolean // 是否是中间的鼓包tabbarItem
@@ -67,9 +68,9 @@ export const customTabbarList: CustomTabBarItem[] = [
     // 本框架内置了 uniapp 官方UI库 （uni-ui)的图标库
     // 使用方式如：<uni-icons type="home" size="30"/>
     // 图标列表地址：https://uniapp.dcloud.net.cn/component/uniui/uni-icons.html
-    iconType: 'uniUi',
-    icon: 'home',
-    // badge: 'dot',
+    iconType: 'unocss',
+    icon: 'i-solar-home-2-bold-duotone',
+    badge: 'dot',
   },
   {
     text: '关于',
@@ -79,13 +80,35 @@ export const customTabbarList: CustomTabBarItem[] = [
     // 2）配置到 unocss.config.ts 的 safelist 中
     iconType: 'unocss',
     icon: 'i-carbon-code',
+    badge: 10,
+  },
+
+  {
+    text: '添加',
+    pagePath: 'pages/login/login',
+    // 注意 unocss 图标需要如下处理：（二选一）
+    // 1）在fg-tabbar.vue页面上引入一下并注释掉（见tabbar/index.vue代码第2行）
+    // 2）配置到 unocss.config.ts 的 safelist 中
+    iconType: 'unocss',
+    icon: 'i-solar-add-circle-bold',
+    // badge: 10,
+    isBulge: true,
+  },
+  {
+    text: '登录',
+    pagePath: 'pages/login/register',
+    // 注意 unocss 图标需要如下处理：（二选一）
+    // 1）在fg-tabbar.vue页面上引入一下并注释掉（见tabbar/index.vue代码第2行）
+    // 2）配置到 unocss.config.ts 的 safelist 中
+    iconType: 'uiLib',
+    icon: 'home',
     // badge: 10,
   },
   {
     pagePath: 'pages/me/me',
     text: '我的',
-    iconType: 'uniUi',
-    icon: 'contact',
+    iconType: 'unocss',
+    icon: 'i-solar-user-bold',
     // badge: 100,
   },
   // 其他类型演示
@@ -149,7 +172,7 @@ const _tabbar: TabBar = {
   fontSize: '10px',
   iconWidth: '24px',
   spacing: '3px',
-  list: _tabbarList as unknown as TabBar['list'],
+  list: _tabbarList as unknown as TabBar[ 'list' ],
 }
 
 // 0和1 需要显示底部的tabbar的各种配置，以利用缓存

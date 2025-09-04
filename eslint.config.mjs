@@ -18,6 +18,7 @@ export default uniHelper({
     'src/service/app/**',
   ],
   rules: {
+    'no-multi-spaces': 'off',
     'no-useless-return': 'off',
     'no-console': 'off',
     'no-unused-vars': 'off',
@@ -28,6 +29,10 @@ export default uniHelper({
     'jsdoc/require-returns-description': 'off',
     'ts/no-empty-object-type': 'off',
     'no-extend-native': 'off',
+    'vue/first-attribute-linebreak': ['error', {
+      singleline: 'ignore',
+      multiline: 'below',
+    }],
     'vue/singleline-html-element-content-newline': [
       'error',
       {

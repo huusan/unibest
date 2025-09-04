@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useThemeStore } from '@/store'
-import FgTabbar from '@/tabbar/index.vue'
+import tabbar from '@/tabbar/index.vue'
 import { isPageTabbar } from './tabbar/store'
 import { currRoute } from './utils'
 
@@ -32,7 +32,7 @@ defineExpose({
 
     <KuRootView />
 
-    <FgTabbar v-if="isCurrentPageTabbar" />
+    <tabbar v-if="isCurrentPageTabbar" />
     <wd-toast />
     <wd-message-box />
   </wd-config-provider>

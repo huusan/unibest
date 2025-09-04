@@ -34,6 +34,14 @@
         "pagePath": "pages/about/about"
       },
       {
+        "text": "添加",
+        "pagePath": "pages/login/login"
+      },
+      {
+        "text": "登录",
+        "pagePath": "pages/login/register"
+      },
+      {
         "text": "我的",
         "pagePath": "pages/me/me"
       }

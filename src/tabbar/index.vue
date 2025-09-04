@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { CustomTabBarItem } from './config'
+import { computed } from 'vue'
+import { useThemeStore } from '@/store/theme'
 import { customTabbarEnable, needHideNativeTabbar, tabbarCacheEnable } from './config'
 import { tabbarList, tabbarStore } from './store'
 
@@ -8,6 +10,9 @@ import { tabbarList, tabbarStore } from './store'
 defineOptions({
   virtualHost: true,
 })
+
+const themeStore = useThemeStore()
+
 // #endif
 
 /**
@@ -20,140 +25,108 @@ function handleClickBulge() {
   })
 }
 
-function handleClick(index: number) {
+function handleClick(value: { value: number }) {
+  const index = value.value
   // 点击原来的不做操作
   if (index === tabbarStore.curIdx) {
     return
   }
-  if (tabbarList[index].isBulge) {
+  const item = tabbarList[index]
+  if (item?.isBulge) {
     handleClickBulge()
     return
   }
-  const url = tabbarList[index].pagePath
+  const url = item.pagePath
   tabbarStore.setCurIdx(index)
-  if (tabbarCacheEnable) {
-    uni.switchTab({ url })
-  }
-  else {
-    uni.navigateTo({ url })
-  }
+  const action = tabbarCacheEnable ? uni.switchTab : uni.navigateTo
+  action({ url })
 }
 // #ifndef MP-WEIXIN
 // 因为有了 custom:true， 微信里面不需要多余的hide操作
 onLoad(() => {
   // 解决原生 tabBar 未隐藏导致有2个 tabBar 的问题
-  needHideNativeTabbar
-  && uni.hideTabBar({
-    fail(err) {
-      console.log('hideTabBar fail: ', err)
-    },
-    success(res) {
-      // console.log('hideTabBar success: ', res)
-    },
-  })
+  if (needHideNativeTabbar) {
+    uni.hideTabBar({
+      fail: (err) => {
+        console.log('hideTabBar fail: ', err)
+      },
+    })
+  }
 })
 // #endif
-const activeColor = 'var(--wot-color-theme, #1890ff)'
-const inactiveColor = '#666'
+
 function getColorByIndex(index: number) {
-  return tabbarStore.curIdx === index ? activeColor : inactiveColor
+  return tabbarStore.curIdx === index ? themeStore.themeVars.tabbarActiveColor : themeStore.themeVars.tabbarInactiveColor
 }
 
 function getImageByIndex(index: number, item: CustomTabBarItem) {
   if (!item.iconActive) {
-    console.warn('image 模式下，需要配置 iconActive (高亮时的图片），否则无法切换高亮图片')
+    console.warn('image 模式下，需要配置 iconActive (高亮时的图片)，否则无法切换高亮图片')
     return item.icon
   }
   return tabbarStore.curIdx === index ? item.iconActive : item.icon
 }
+
+const itemProps = computed(() => {
+  return (item: CustomTabBarItem) => {
+    return {
+      title: item?.isBulge ? '' : item.text,
+      isDot: item.badge === 'dot',
+      value: typeof item.badge === 'number' ? item.badge : null,
+    }
+  }
+})
 </script>
 
 <template>
-  <view v-if="customTabbarEnable" class="h-50px pb-safe">
-    <view class="border-and-fixed bg-white" @touchmove.stop.prevent>
-      <view class="h-50px flex items-center">
-        <view
-          v-for="(item, index) in tabbarList" :key="index"
-          class="flex flex-1 flex-col items-center justify-center"
-          :style="{ color: getColorByIndex(index) }"
-          @click="handleClick(index)"
+  <block v-if="customTabbarEnable">
+    <wd-tabbar
+      :model-value="tabbarStore.curIdx" :bordered="true" :safe-area-inset-bottom="true" :placeholder="true"
+      :fixed="true" @change="handleClick"
+    >
+      <block v-for="(item, idx) in tabbarList" :key="item.pagePath">
+        <wd-tabbar-item
+          v-if="item.iconType === 'uiLib'" :icon="item.icon" v-bind="itemProps(item)"
+          :name="idx"
+        />
+        <wd-tabbar-item v-else-if="item.iconType === 'uniUi'" v-bind="itemProps(item)" :name="idx">
+          <template #icon>
+            <uni-icons :type="item.icon as any" size="20" :color="getColorByIndex(idx)" />
+          </template>
+        </wd-tabbar-item>
+        <wd-tabbar-item
+          v-else-if="['unocss', 'iconfont'].includes(item.iconType)" v-bind="itemProps(item)"
+          :name="idx" class="z-10" @click="handleClickBulge"
         >
-          <view v-if="item.isBulge" class="relative">
-            <!-- 中间一个鼓包tabbarItem的处理 -->
-            <view class="bulge">
-              <!-- TODO 2/2: 中间鼓包tabbarItem配置：通常是一个图片，或者icon，点击触发业务逻辑 -->
-              <!-- 常见的是：扫描按钮、发布按钮、更多按钮等 -->
-              <image class="mt-6rpx h-200rpx w-200rpx" src="/static/tabbar/scan.png" />
-            </view>
-          </view>
-          <view v-else class="relative px-3 text-center">
-            <template v-if="item.iconType === 'uniUi'">
-              <uni-icons :type="item.icon" size="20" :color="getColorByIndex(index)" />
-            </template>
-            <template v-if="item.iconType === 'uiLib'">
-              <!-- TODO: 以下内容请根据选择的UI库自行替换 -->
-              <!-- 如：<wd-icon name="home" /> (https://wot-design-uni.cn/component/icon.html) -->
-              <!-- 如：<uv-icon name="home" /> (https://www.uvui.cn/components/icon.html) -->
-              <!-- 如：<sar-icon name="image" /> (https://sard.wzt.zone/sard-uniapp-docs/components/icon)(sar没有home图标^_^) -->
-              <wd-icon :name="item.icon" size="20" />
-            </template>
-            <template v-if="item.iconType === 'unocss' || item.iconType === 'iconfont'">
-              <view :class="item.icon" class="text-20px" />
-            </template>
-            <template v-if="item.iconType === 'image'">
-              <image :src="getImageByIndex(index, item)" mode="scaleToFill" class="h-20px w-20px" />
-            </template>
-            <view class="mt-2px text-12px">
-              {{ item.text }}
-            </view>
-            <!-- 角标显示 -->
-            <view v-if="item.badge">
-              <template v-if="item.badge === 'dot'">
-                <view class="absolute right-0 top-0 h-2 w-2 rounded-full bg-#f56c6c" />
-              </template>
-              <template v-else>
-                <view class="absolute top-0 box-border h-5 min-w-5 center rounded-full bg-#f56c6c px-1 text-center text-xs text-white -right-3">
-                  {{ item.badge > 99 ? '99+' : item.badge }}
-                </view>
-              </template>
-            </view>
-          </view>
-        </view>
-      </view>
-
-      <view class="pb-safe" />
-    </view>
-  </view>
+          <template #icon>
+            <view
+              class="h-50rpx w-50rpx"
+              :class="[item.icon, { 'is-active': idx === tabbarStore.curIdx, 'is-inactive': idx !== tabbarStore.curIdx }, { 'bulge-icon': item?.isBulge }]"
+            />
+          </template>
+        </wd-tabbar-item>
+        <wd-tabbar-item v-else-if="item.iconType === 'image'" v-bind="itemProps(item)" :name="idx">
+          <template #icon>
+            <image :src="getImageByIndex(idx, item)" h-64rpx w-64rpx />
+          </template>
+        </wd-tabbar-item>
+      </block>
+    </wd-tabbar>
+  </block>
 </template>
 
 <style scoped lang="scss">
-.border-and-fixed {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.bulge-icon {
+  position: relative;
+  top: -40rpx;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background-color: var(--wot-color-theme);
 
-  border-top: 1px solid #eee;
-  box-sizing: border-box;
-}
-// 中间鼓包的样式
-.bulge {
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  transform-origin: top center;
-  transform: translateX(-50%) scale(0.5) translateY(-33%);
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 250rpx;
-  height: 250rpx;
-  border-radius: 50%;
-  background-color: #fff;
-  box-shadow: inset 0 0 0 1px #fefefe;
-
-  &:active {
-    // opacity: 0.8;
-  }
+  z-index: 10;
 }
 </style>

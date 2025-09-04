@@ -97,7 +97,7 @@ importers:
         version: 2.8.8
     devDependencies:
       '@dcloudio/types':
-        specifier: ^3.4.8
+        specifier: ^3.4.19
         version: 3.4.19
       '@dcloudio/uni-automator':
         specifier: 3.0.0-4070620250821001
@@ -120,6 +120,9 @@ importers:
       '@iconify-json/carbon':
         specifier: ^1.2.13
         version: 1.2.13
+      '@iconify-json/solar':
+        specifier: ^1.2.4
+        version: 1.2.4
       '@rollup/rollup-darwin-x64':
         specifier: ^4.28.0
         version: 4.50.0
@@ -1273,6 +1276,9 @@ packages:
 
   '@iconify-json/carbon@1.2.13':
     resolution: {integrity: sha512-vXrFFKkfYaZSwf4WfnRQJQMnpEzxlPlupwZZlS1WvOAuNnWahsUudHycaMpoBzDqBfniH4KQ2b5qnw0VMKoJug==}
+
+  '@iconify-json/solar@1.2.4':
+    resolution: {integrity: sha512-ruAh+bbYimlzqXW6MtqmvWlfatvFjE7o1fZWieps1h42Dx7AaHu4Z/dgOYSO1RR4MIhNzD+2xgEbFjASgBcEyg==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -7228,6 +7234,10 @@ snapshots:
   '@humanwhocodes/retry@0.4.3': {}
 
   '@iconify-json/carbon@1.2.13':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/solar@1.2.4':
     dependencies:
       '@iconify/types': 2.0.0
 

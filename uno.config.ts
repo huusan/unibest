@@ -37,7 +37,7 @@ export default defineConfig({
     },
   ],
   // 动态图标需要在这里配置，或者写在vue页面中注释掉
-  safelist: ['i-carbon-code'],
+  safelist: ['i-carbon-code', 'i-carbon-home', 'i-carbon-user-filled', 'i-solar-home-2-bold-duotone', 'i-solar-user-bold', 'i-solar-add-circle-bold'],
   rules: [
     [
       'p-safe',
