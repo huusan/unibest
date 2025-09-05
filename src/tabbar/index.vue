@@ -80,28 +80,24 @@ const itemProps = computed(() => {
 
 <template>
   <block v-if="customTabbarEnable">
-    <wd-tabbar
-      :model-value="tabbarStore.curIdx" :bordered="true" :safe-area-inset-bottom="true" :placeholder="true"
-      :fixed="true" @change="handleClick"
+    <wd-tabbar :model-value="tabbarStore.curIdx" :bordered="true" :safe-area-inset-bottom="true" :placeholder="true"
+               :fixed="true" @change="handleClick"
     >
       <block v-for="(item, idx) in tabbarList" :key="item.pagePath">
-        <wd-tabbar-item
-          v-if="item.iconType === 'uiLib'" :icon="item.icon" v-bind="itemProps(item)"
-          :name="idx"
+        <wd-tabbar-item v-if="item.iconType === 'uiLib'" :icon="item.icon" v-bind="itemProps(item)"
+                        :name="idx"
         />
         <wd-tabbar-item v-else-if="item.iconType === 'uniUi'" v-bind="itemProps(item)" :name="idx">
           <template #icon>
             <uni-icons :type="item.icon as any" size="20" :color="getColorByIndex(idx)" />
           </template>
         </wd-tabbar-item>
-        <wd-tabbar-item
-          v-else-if="['unocss', 'iconfont'].includes(item.iconType)" v-bind="itemProps(item)"
-          :name="idx" class="z-10" @click="handleClickBulge"
+        <wd-tabbar-item v-else-if="['unocss', 'iconfont'].includes(item.iconType)" v-bind="itemProps(item)"
+                        :name="idx"
         >
           <template #icon>
-            <view
-              class="h-50rpx w-50rpx"
-              :class="[item.icon, { 'is-active': idx === tabbarStore.curIdx, 'is-inactive': idx !== tabbarStore.curIdx }, { 'bulge-icon': item?.isBulge }]"
+            <view class="h-50rpx w-50rpx"
+                  :class="[item.icon, { 'is-active': idx === tabbarStore.curIdx, 'is-inactive': idx !== tabbarStore.curIdx }, { 'bulge-icon': item?.isBulge }]"
             />
           </template>
         </wd-tabbar-item>
@@ -116,12 +112,14 @@ const itemProps = computed(() => {
 </template>
 
 <style scoped lang="scss">
-.bulge-icon {
+    .bulge-icon {
   position: relative;
   top: -40rpx;
   width: 120rpx;
   height: 120rpx;
   border-radius: 50%;
+  border: 2rpx solid var(--wot-color-theme);
+  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
   background-color: var(--wot-color-theme);
 
   display: flex;

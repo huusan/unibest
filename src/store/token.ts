@@ -1,6 +1,6 @@
 import type { IAuthLoginRes, ILoginForm } from '@/api/types/login'
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue' // 修复：导入 computed
+import { computed, ref } from 'vue'
 import {
   login as _login,
   logout as _logout,
@@ -12,26 +12,37 @@ import { isDoubleTokenRes, isSingleTokenRes } from '@/api/types/login'
 import { isDoubleTokenMode } from '@/utils'
 import { useUserStore } from './user'
 
-// 初始化状态
-const tokenInfoState = isDoubleTokenMode
+// 初始化状态 - 修复类型匹配问题
+const tokenInfoState: IAuthLoginRes = isDoubleTokenMode
   ? {
       accessToken: '',
       accessExpiresIn: 0,
       refreshToken: '',
       refreshExpiresIn: 0,
-    }
+    } as IAuthLoginRes
   : {
       token: '',
       expiresIn: 0,
-    }
+    } as IAuthLoginRes
 
 export const useTokenStore = defineStore(
   'token',
   () => {
     // 定义用户信息
     const tokenInfo = ref<IAuthLoginRes>({ ...tokenInfoState })
-    // 设置用户信息
+
+    // 设置用户信息 - 添加类型验证
     const setTokenInfo = (val: IAuthLoginRes) => {
+      // 验证传入的token类型是否与当前模式匹配
+      if (isDoubleTokenMode && !isDoubleTokenRes(val)) {
+        console.error('双token模式下传入了错误的token类型')
+        return
+      }
+      if (!isDoubleTokenMode && !isSingleTokenRes(val)) {
+        console.error('单token模式下传入了错误的token类型')
+        return
+      }
+
       tokenInfo.value = val
 
       // 计算并存储过期时间
@@ -84,7 +95,13 @@ export const useTokenStore = defineStore(
     async function _postLogin(tokenInfo: IAuthLoginRes) {
       setTokenInfo(tokenInfo)
       const userStore = useUserStore()
-      await userStore.fetchUserInfo()
+      try {
+        await userStore.fetchUserInfo()
+      }
+      catch (error) {
+        console.error('获取用户信息失败:', error)
+        // 即使获取用户信息失败，登录状态仍然有效
+      }
     }
 
     /**
@@ -147,17 +164,21 @@ export const useTokenStore = defineStore(
     const logout = async () => {
       try {
         await _logout()
-        // 清除存储的过期时间
-        uni.removeStorageSync('accessTokenExpireTime')
-        uni.removeStorageSync('refreshTokenExpireTime')
       }
       catch (error) {
         console.error('退出登录失败:', error)
       }
       finally {
-        // 无论成功失败，都需要清除本地token信息
+        // 清除存储的过期时间
+        uni.removeStorageSync('accessTokenExpireTime')
+        uni.removeStorageSync('refreshTokenExpireTime')
+
+        // 重置token信息
+        tokenInfo.value = { ...tokenInfoState }
+
+        // 无论成功失败，都需要清除本地用户信息
         const userStore = useUserStore()
-        await userStore.removeUserInfo()
+        userStore.removeUserInfo() // 修复：移除await，因为这是同步方法
       }
     }
 
@@ -185,6 +206,8 @@ export const useTokenStore = defineStore(
       }
       catch (error) {
         console.error('刷新token失败:', error)
+        // 刷新token失败时，清除当前登录状态
+        await logout()
         throw error
       }
     }
@@ -212,12 +235,13 @@ export const useTokenStore = defineStore(
      * 检查是否有登录信息（不考虑token是否过期）
      */
     const hasLoginInfo = computed(() => {
-      if (isDoubleTokenMode) {
+      if (!tokenInfo.value)
+        return false
+      if (isDoubleTokenMode)
         return isDoubleTokenRes(tokenInfo.value) && !!tokenInfo.value.accessToken
-      }
-      else {
+
+      else
         return isSingleTokenRes(tokenInfo.value) && !!tokenInfo.value.token
-      }
     })
 
     /**

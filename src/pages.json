@@ -35,11 +35,11 @@
       },
       {
         "text": "添加",
-        "pagePath": "pages/login/login"
+        "pagePath": "pages/login/register"
       },
       {
         "text": "登录",
-        "pagePath": "pages/login/register"
+        "pagePath": "pages/about/alova"
       },
       {
         "text": "我的",

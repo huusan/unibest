@@ -31,7 +31,7 @@ export default uniHelper({
     'no-extend-native': 'off',
     'vue/first-attribute-linebreak': ['error', {
       singleline: 'ignore',
-      multiline: 'below',
+      multiline: 'ignore',
     }],
     'vue/singleline-html-element-content-newline': [
       'error',

@@ -13,14 +13,19 @@ definePage({
 })
 
 const redirectUrl = ref('')
-onLoad((options) => {
+onShow(() => {
+  // onShow 比 onLoad 更适合处理登录页的跳转逻辑
+  // 因为 onShow 每次页面显示都会执行，而 onLoad 只执行一次
+  // 这样能保证每次进入登录页都能正确处理跳转
+  const pages = getCurrentPages()
+  const currentPage = pages[pages.length - 1] as any
+  const options = currentPage.options
   console.log('login options: ', options)
-  if (options.redirect) {
+  if (options.redirect)
     redirectUrl.value = ensureDecodeURIComponent(options.redirect)
-  }
-  else {
+  else
     redirectUrl.value = tabbarList[0].pagePath
-  }
+
   console.log('redirectUrl.value: ', redirectUrl.value)
 })
 
@@ -43,10 +48,7 @@ function doLogin() {
     expiresIn: 60 * 60 * 24 * 7,
   })
   console.log(redirectUrl.value)
-  let path = redirectUrl.value
-  if (!path.startsWith('/')) {
-    path = `/${path}`
-  }
+  const path = redirectUrl.value.startsWith('/') ? redirectUrl.value : `/${redirectUrl.value}`
   const { path: _path, query } = parseUrlToObj(path)
   console.log('_path:', _path, 'query:', query, 'path:', path)
   console.log('isPageTabbar(_path):', isPageTabbar(_path))
