@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// i-carbon-code
 import type { CustomTabBarItem } from './config'
 import { computed } from 'vue'
 import { useThemeStore } from '@/store/theme'
