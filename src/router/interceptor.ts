@@ -7,7 +7,7 @@ import { isMp } from '@uni-helper/uni-env'
 import { useTokenStore } from '@/store/token'
 import { isPageTabbar, tabbarStore } from '@/tabbar/store'
 import { getAllPages, getLastPage, HOME_PAGE, parseUrlToObj } from '@/utils/index'
-import { EXCLUDE_LOGIN_PATH_LIST, isNeedLoginMode, LOGIN_PAGE, LOGIN_PAGE_ENABLE_IN_WP } from './config'
+import { EXCLUDE_LOGIN_PATH_LIST, isNeedLoginMode, LOGIN_PAGE, LOGIN_PAGE_ENABLE_IN_MP } from './config'
 
 export const isDev = import.meta.env.DEV
 
@@ -41,15 +41,16 @@ export const navigateToInterceptor = {
     if (!path.startsWith('/')) {
       const currentPath = getLastPage()?.route || ''
       const normalizedCurrentPath = currentPath.startsWith('/') ? currentPath : `/${currentPath}`
-      const baseDir = normalizedCurrentPath.substring(0, normalizedCurrentPath.lastIndexOf('/'))
-      path = `${baseDir}/${path}`
+      const lastSlashIndex = normalizedCurrentPath.lastIndexOf('/')
+      const baseDir = lastSlashIndex > 0 ? normalizedCurrentPath.substring(0, lastSlashIndex) : ''
+      path = baseDir ? `${baseDir}/${path}` : `/${path}`
     }
 
     // 处理直接进入路由非首页时，tabbarIndex 不正确的问题
     tabbarStore.setAutoCurIdx(path)
 
     // 小程序里面使用平台自带的登录，则不走下面的逻辑
-    if (isMp && LOGIN_PAGE_ENABLE_IN_WP) {
+    if (isMp && LOGIN_PAGE_ENABLE_IN_MP) {
       return true // 明确表示允许路由继续执行
     }
 
@@ -57,27 +58,33 @@ export const navigateToInterceptor = {
     isDev && console.log('tokenStore.hasLogin:', tokenStore.hasLogin)
 
     // 不管黑白名单，登录了就直接去吧（但是当前不能是登录页）
-    if (tokenStore.hasLogin || !isNeedLoginMode) {
+    if (tokenStore.hasLogin) {
       if (path !== LOGIN_PAGE) {
         return true // 明确表示允许路由继续执行
       }
       else {
-        console.log('已经登录，但是还在登录页', myQuery.redirect)
-        const url = myQuery.redirect || HOME_PAGE
-        console.log('已经登录，但是还在登录页', url)
-        if (isPageTabbar(url)) {
-          uni.switchTab({ url })
+        // 已登录用户访问登录页，重定向到目标页面或首页
+        const redirectUrl = myQuery.redirect || HOME_PAGE
+        isDev && console.log('已经登录，重定向到:', redirectUrl)
+        if (isPageTabbar(redirectUrl)) {
+          uni.switchTab({ url: redirectUrl })
         }
         else {
-          uni.navigateTo({ url })
+          uni.navigateTo({ url: redirectUrl })
         }
-        return false // 明确表示阻止原路由继续执行
+        return false // 阻止原路由继续执行
       }
     }
     let fullPath = path
 
-    if (myQuery) {
-      fullPath += `?${Object.keys(myQuery).map(key => `${key}=${myQuery[key]}`).join('&')}`
+    if (myQuery && Object.keys(myQuery).length > 0) {
+      const queryString = Object.keys(myQuery)
+        .filter(key => myQuery[key] !== undefined && myQuery[key] !== null && myQuery[key] !== '')
+        .map(key => `${key}=${encodeURIComponent(myQuery[key])}`)
+        .join('&')
+      if (queryString) {
+        fullPath += `?${queryString}`
+      }
     }
     const redirectUrl = `${LOGIN_PAGE}?redirect=${encodeURIComponent(fullPath)}`
     isDev && console.log('redirectUrl:', redirectUrl)
@@ -102,12 +109,14 @@ export const navigateToInterceptor = {
 
     // #region 2/2 不需要登录的情况(黑名单策略) ---------------------------
     else {
+      if (path === LOGIN_PAGE) {
+        return true // 明确表示阻止原路由继续执行
+      }
       // 不需要登录里面的 EXCLUDE_LOGIN_PATH_LIST 表示黑名单，需要重定向到登录页
       if (judgeIsExcludePath(path)) {
         isDev && console.log('2 isNeedLogin(黑名单策略) redirectUrl:', redirectUrl)
-
         uni.navigateTo({ url: redirectUrl })
-        return false // 修改为false，阻止原路由继续执行
+        return false // 阻止原路由继续执行
       }
     }
     // #endregion 2/2 不需要登录的情况(黑名单策略) ---------------------------
