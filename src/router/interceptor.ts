@@ -41,16 +41,15 @@ export const navigateToInterceptor = {
     if (!path.startsWith('/')) {
       const currentPath = getLastPage()?.route || ''
       const normalizedCurrentPath = currentPath.startsWith('/') ? currentPath : `/${currentPath}`
-      const lastSlashIndex = normalizedCurrentPath.lastIndexOf('/')
-      const baseDir = lastSlashIndex > 0 ? normalizedCurrentPath.substring(0, lastSlashIndex) : ''
-      path = baseDir ? `${baseDir}/${path}` : `/${path}`
+      const baseDir = normalizedCurrentPath.substring(0, normalizedCurrentPath.lastIndexOf('/'))
+      path = `${baseDir}/${path}`
     }
 
     // 处理直接进入路由非首页时，tabbarIndex 不正确的问题
     tabbarStore.setAutoCurIdx(path)
 
     // 小程序里面使用平台自带的登录，则不走下面的逻辑
-    if (isMp && LOGIN_PAGE_ENABLE_IN_MP) {
+    if (isMp && !LOGIN_PAGE_ENABLE_IN_MP) {
       return true // 明确表示允许路由继续执行
     }
 
@@ -77,17 +76,10 @@ export const navigateToInterceptor = {
     }
     let fullPath = path
 
-    if (myQuery && Object.keys(myQuery).length > 0) {
-      const queryString = Object.keys(myQuery)
-        .filter(key => myQuery[key] !== undefined && myQuery[key] !== null && myQuery[key] !== '')
-        .map(key => `${key}=${encodeURIComponent(myQuery[key])}`)
-        .join('&')
-      if (queryString) {
-        fullPath += `?${queryString}`
-      }
+    if (myQuery) {
+      fullPath += `?${Object.keys(myQuery).map(key => `${key}=${myQuery[key]}`).join('&')}`
     }
     const redirectUrl = `${LOGIN_PAGE}?redirect=${encodeURIComponent(fullPath)}`
-    isDev && console.log('redirectUrl:', redirectUrl)
 
     // #region 1/2 需要登录的情况(白名单策略) ---------------------------
     if (isNeedLoginMode) {
