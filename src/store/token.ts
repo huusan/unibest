@@ -33,16 +33,6 @@ export const useTokenStore = defineStore(
 
     // 设置用户信息 - 添加类型验证
     const setTokenInfo = (val: IAuthLoginRes) => {
-      // 验证传入的token类型是否与当前模式匹配
-      if (isDoubleTokenMode && !isDoubleTokenRes(val)) {
-        console.error('双token模式下传入了错误的token类型')
-        return
-      }
-      if (!isDoubleTokenMode && !isSingleTokenRes(val)) {
-        console.error('单token模式下传入了错误的token类型')
-        return
-      }
-
       tokenInfo.value = val
 
       // 计算并存储过期时间
@@ -81,7 +71,7 @@ export const useTokenStore = defineStore(
      * 判断refreshToken是否过期
      */
     const isRefreshTokenExpired = computed(() => {
-      if (!isDoubleTokenMode)
+      if (!isDoubleTokenMode || !tokenInfo.value)
         return true
 
       const now = Date.now()
@@ -99,13 +89,7 @@ export const useTokenStore = defineStore(
     async function _postLogin(tokenInfo: IAuthLoginRes) {
       setTokenInfo(tokenInfo)
       const userStore = useUserStore()
-      try {
-        await userStore.fetchUserInfo()
-      }
-      catch (error) {
-        console.error('获取用户信息失败:', error)
-        // 即使获取用户信息失败，登录状态仍然有效
-      }
+      await userStore.fetchUserInfo()
     }
 
     /**
@@ -198,7 +182,7 @@ export const useTokenStore = defineStore(
 
       try {
         // 安全检查，确保refreshToken存在
-        if (!isDoubleTokenRes(tokenInfo.value) || !tokenInfo.value.refreshToken) {
+        if (!isDoubleTokenRes(tokenInfo.value) || !tokenInfo.value?.refreshToken) {
           throw new Error('无效的refreshToken')
         }
 
@@ -244,9 +228,10 @@ export const useTokenStore = defineStore(
       }
       if (isDoubleTokenMode) {
         return isDoubleTokenRes(tokenInfo.value) && !!tokenInfo.value.accessToken
-
-      else
+      }
+      else {
         return isSingleTokenRes(tokenInfo.value) && !!tokenInfo.value.token
+      }
     })
 
     /**
@@ -254,6 +239,9 @@ export const useTokenStore = defineStore(
      */
     const hasValidLogin = computed(() => {
       console.log('hasValidLogin', hasLoginInfo.value, !isTokenExpired.value)
+      if (isDoubleTokenMode) {
+        return hasLoginInfo.value && !isTokenExpired.value && !isRefreshTokenExpired.value
+      }
       return hasLoginInfo.value && !isTokenExpired.value
     })
 

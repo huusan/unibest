@@ -14,7 +14,11 @@ export function getCode() {
  * @param loginForm 登录表单
  */
 export function login(loginForm: ILoginForm) {
-  return http.Post<IAuthLoginRes>('/auth/login', loginForm)
+  return http.Post<IAuthLoginRes>('/auth/login', loginForm, {
+    meta: {
+      authRole: 'login',
+    },
+  })
 }
 
 /**
@@ -22,7 +26,11 @@ export function login(loginForm: ILoginForm) {
  * @param refreshToken 刷新token
  */
 export function refreshToken(refreshToken: string) {
-  return http.Post<IDoubleTokenRes>('/auth/refreshToken', { refreshToken })
+  return http.Post<IDoubleTokenRes>('/auth/refreshToken', { refreshToken }, {
+    meta: {
+      authRole: 'refreshToken',
+    },
+  })
 }
 
 /**
@@ -36,7 +44,11 @@ export function getUserInfo() {
  * 退出登录
  */
 export function logout() {
-  return http.Get<void>('/auth/logout')
+  return http.Get<void>('/auth/logout', {
+    meta: {
+      authRole: 'logout',
+    },
+  })
 }
 
 /**
@@ -73,5 +85,9 @@ export function getWxCode() {
  * @returns Promise 包含登录结果
  */
 export function wxLogin(data: { code: string }) {
-  return http.Post<IAuthLoginRes>('/auth/wxLogin', data)
+  return http.Post<IAuthLoginRes>('/auth/wxLogin', data, {
+    meta: {
+      authRole: 'login',
+    },
+  })
 }

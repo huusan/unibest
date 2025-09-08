@@ -5,7 +5,8 @@ import { createAlova } from 'alova'
 import { createServerTokenAuthentication } from 'alova/client'
 import VueHook from 'alova/vue'
 import { LOGIN_PAGE } from '@/router/config'
-import { ContentTypeEnum, ResultEnum, ShowMessage } from './tools/enum'
+import { useTokenStore } from '@/store'
+import { ResultEnum, ShowMessage } from './tools/enum'
 
 // 配置动态Tag
 export const API_DOMAINS = {
@@ -20,17 +21,36 @@ const { onAuthRequired, onResponseRefreshToken } = createServerTokenAuthenticati
   typeof VueHook,
   typeof uniappRequestAdapter
 >({
+  // 放行访客请求
+  // export const requestTokenNotRequired = () => {
+  //   const method = alovaInstance.Get('/token_not_required');
+  //   method.meta = {
+  //     authRole: null
+  //   };
+  //   return method;
+  // };
+  assignToken: (method) => {
+    const tokenStore = useTokenStore()
+    const token = tokenStore.validToken
+    method.config.headers.Authorization = `Bearer ${token}`
+  },
+
   refreshTokenOnError: {
-    isExpired: (error) => {
+    isExpired: (error, method) => {
+      if (method.meta?.authRole === 'refreshToken') {
+        return false
+      }
       return error.response?.status === ResultEnum.Unauthorized
     },
     handler: async () => {
       try {
-        // await authLogin();
+        const tokenStore = useTokenStore()
+        await tokenStore.refreshToken()
       }
       catch (error) {
         // 切换到登录页
-        await uni.reLaunch({ url: LOGIN_PAGE })
+        uni.reLaunch({ url: LOGIN_PAGE })
+        // 并抛出错误
         throw error
       }
     },
@@ -46,25 +66,15 @@ const alovaInstance = createAlova({
   timeout: 5000,
   statesHook: VueHook,
 
-  beforeRequest: onAuthRequired((method) => {
+  beforeRequest: onAuthRequired(async (method) => {
     // 设置默认 Content-Type
-    method.config.headers = {
-      ContentType: ContentTypeEnum.JSON,
-      Accept: 'application/json, text/plain, */*',
-      ...method.config.headers,
-    }
+    // method.config.headers = {
+    //   ContentType: ContentTypeEnum.JSON,
+    //   Accept: 'application/json, text/plain, */*',
+    //   ...method.config.headers,
+    // }
 
     const { config } = method
-    const ignoreAuth = !config.meta?.ignoreAuth
-    console.log('ignoreAuth===>', ignoreAuth)
-    // 处理认证信息   自行处理认证问题
-    if (ignoreAuth) {
-      const token = 'getToken()'
-      if (!token) {
-        throw new Error('[请求错误]：未登录')
-      }
-      // method.config.headers.token = token;
-    }
 
     // 处理动态域名
     if (config.meta?.domain) {

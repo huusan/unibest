@@ -27,8 +27,9 @@ export const navigateToInterceptor = {
     if (url === undefined) {
       return
     }
-    if (isNavigating)
+    if (isNavigating) {
       return true // 放行已发起的跳转
+    }
     let { path, query: _query } = parseUrlToObj(url)
 
     isDev && console.log('\n\n路由拦截器:-------------------------------------')

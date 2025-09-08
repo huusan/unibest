@@ -46,7 +46,7 @@ export const useUserStore = defineStore(
      */
     const fetchUserInfo = async () => {
       const res = await getUserInfo()
-      setUserInfo(res.data)
+      setUserInfo(res)
       return res
     }
 
