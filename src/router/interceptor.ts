@@ -85,12 +85,12 @@ export const navigateToInterceptor = {
     }
     let fullPath = path
 
-    if (myQuery) {
+    if (Object.keys(myQuery).length) {
       fullPath += `?${Object.keys(myQuery).map(key => `${key}=${myQuery[key]}`).join('&')}`
     }
     const redirectUrl = `${LOGIN_PAGE}?redirect=${encodeURIComponent(fullPath)}`
 
-    // #region 1/2 需要登录的情况(白名单策略) ---------------------------
+    // #region 1/2 默认需要登录的情况(白名单策略) ---------------------------
     if (isNeedLoginMode) {
       // 需要登录里面的 EXCLUDE_LOGIN_PATH_LIST 表示白名单，可以直接通过
       if (judgeIsExcludePath(path)) {
@@ -110,9 +110,9 @@ export const navigateToInterceptor = {
         return false // 明确表示阻止原路由继续执行
       }
     }
-    // #endregion 1/2 需要登录的情况(白名单策略) ---------------------------
+    // #endregion 1/2 默认需要登录的情况(白名单策略) ---------------------------
 
-    // #region 2/2 不需要登录的情况(黑名单策略) ---------------------------
+    // #region 2/2 默认不需要登录的情况(黑名单策略) ---------------------------
     else {
       if (path === LOGIN_PAGE) {
         return true // 明确表示阻止原路由继续执行
@@ -129,7 +129,7 @@ export const navigateToInterceptor = {
         return false // 阻止原路由继续执行
       }
     }
-    // #endregion 2/2 不需要登录的情况(黑名单策略) ---------------------------
+    // #endregion 2/2 默认不需要登录的情况(黑名单策略) ---------------------------
     return true // 明确表示允许路由继续执行
   },
 }

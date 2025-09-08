@@ -7,7 +7,7 @@ import {
 
 // 初始化状态
 const userInfoState: IUserInfoRes = {
-  userId: 0,
+  userId: -1,
   username: '',
   nickname: '',
   avatar: '/static/images/default-avatar.png',
@@ -36,7 +36,7 @@ export const useUserStore = defineStore(
     }
 
     // 删除用户信息
-    const removeUserInfo = () => {
+    const clearUserInfo = () => {
       userInfo.value = { ...userInfoState }
       uni.removeStorageSync('user')
     }
@@ -52,7 +52,7 @@ export const useUserStore = defineStore(
 
     return {
       userInfo,
-      removeUserInfo,
+      clearUserInfo,
       fetchUserInfo,
       setUserInfo,
       setUserAvatar,
