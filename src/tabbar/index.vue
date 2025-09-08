@@ -113,15 +113,15 @@ const itemProps = computed(() => {
 </template>
 
 <style scoped lang="scss">
-    .bulge-icon {
+  .bulge-icon {
   position: relative;
   top: -40rpx;
   width: 120rpx;
   height: 120rpx;
   border-radius: 50%;
-  border: 2rpx solid var(--wot-color-theme);
+  border: 2rpx solid var(--wot-tabbar-active-color);
   box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
-  background-color: var(--wot-color-theme);
+  background-color: var(--wot-tabbar-active-color);
 
   display: flex;
   justify-content: center;

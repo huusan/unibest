@@ -95,7 +95,7 @@ function toLogin() {
     <!-- #endif -->
 
     <view class="mt-4 text-center">
-      <wd-button type="primary" class="ml-2" @click="themeStore.setThemeVars({ colorTheme: 'red' })">
+      <wd-button type="primary" class="ml-2" @click="themeStore.setColorTheme('green')">
         设置主题变量
       </wd-button>
     </view>

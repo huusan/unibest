@@ -19,6 +19,7 @@ export const excludeLoginPathList = getAllPages('excludeLoginPath').map(page => 
 // 排除在外的列表，白名单策略指白名单列表，黑名单策略指黑名单列表
 export const EXCLUDE_LOGIN_PATH_LIST = [
   '/pages/xxx/index',
+  '/pages/about/about',
   ...excludeLoginPathList, // 都是以 / 开头的 path
 ]
 

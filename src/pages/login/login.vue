@@ -85,5 +85,5 @@ function doLogin() {
 </template>
 
 <style lang="scss" scoped>
-//
+  //
 </style>

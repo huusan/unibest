@@ -9,6 +9,7 @@ import { isPageTabbar, tabbarStore } from '@/tabbar/store'
 import { getAllPages, getLastPage, HOME_PAGE, parseUrlToObj } from '@/utils/index'
 import { EXCLUDE_LOGIN_PATH_LIST, isNeedLoginMode, LOGIN_PAGE, LOGIN_PAGE_ENABLE_IN_MP } from './config'
 
+let isNavigating = false // 防重复跳转
 export const isDev = import.meta.env.DEV
 
 export function judgeIsExcludePath(path: string) {
@@ -16,8 +17,6 @@ export function judgeIsExcludePath(path: string) {
     return EXCLUDE_LOGIN_PATH_LIST.includes(path)
   }
   const allExcludeLoginPages = getAllPages('excludeLoginPath') // dev 环境下，需要每次都重新获取，否则新配置就不会生效
-  console.log(EXCLUDE_LOGIN_PATH_LIST)
-  console.log(allExcludeLoginPages)
   return EXCLUDE_LOGIN_PATH_LIST.includes(path) || (isDev && allExcludeLoginPages.some(page => page.path === path))
 }
 
@@ -28,6 +27,8 @@ export const navigateToInterceptor = {
     if (url === undefined) {
       return
     }
+    if (isNavigating)
+      return true // 放行已发起的跳转
     let { path, query: _query } = parseUrlToObj(url)
 
     isDev && console.log('\n\n路由拦截器:-------------------------------------')
@@ -65,11 +66,19 @@ export const navigateToInterceptor = {
         // 已登录用户访问登录页，重定向到目标页面或首页
         const redirectUrl = myQuery.redirect || HOME_PAGE
         isDev && console.log('已经登录，重定向到:', redirectUrl)
+        isNavigating = true
         if (isPageTabbar(redirectUrl)) {
-          uni.switchTab({ url: redirectUrl })
+          uni.switchTab({
+            url: redirectUrl,
+            complete: () => { isNavigating = false },
+          })
         }
         else {
-          uni.navigateTo({ url: redirectUrl })
+          uni.navigateTo({
+            url: redirectUrl,
+            complete: () => { isNavigating = false },
+          },
+          )
         }
         return false // 阻止原路由继续执行
       }
@@ -92,8 +101,12 @@ export const navigateToInterceptor = {
         if (path === LOGIN_PAGE) {
           return true // 明确表示允许路由继续执行
         }
+        isNavigating = true
         isDev && console.log('1 isNeedLogin(白名单策略) redirectUrl:', redirectUrl)
-        uni.navigateTo({ url: redirectUrl })
+        uni.navigateTo({
+          url: redirectUrl,
+          complete: () => { isNavigating = false },
+        })
         return false // 明确表示阻止原路由继续执行
       }
     }
@@ -107,7 +120,12 @@ export const navigateToInterceptor = {
       // 不需要登录里面的 EXCLUDE_LOGIN_PATH_LIST 表示黑名单，需要重定向到登录页
       if (judgeIsExcludePath(path)) {
         isDev && console.log('2 isNeedLogin(黑名单策略) redirectUrl:', redirectUrl)
-        uni.navigateTo({ url: redirectUrl })
+        isNavigating = true
+
+        uni.navigateTo({
+          url: redirectUrl,
+          complete: () => { isNavigating = false },
+        })
         return false // 阻止原路由继续执行
       }
     }
