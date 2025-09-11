@@ -1,9 +1,10 @@
 {
   "name": "unibest",
   "type": "module",
-  "version": "3.14.0",
-  "unibest-version": "3.14.0",
-  "update-time": "2025-09-07",
+  "version": "3.15.0",
+  "unibest-version": "3.15.0",
+  "update-time": "2025-09-09",
+  "packageManager": "pnpm@10.10.0",
   "description": "unibest - 最好的 uniapp 开发模板",
   "generate-time": "用户创建项目时生成",
   "author": {
@@ -21,7 +22,8 @@
     "url-old": "https://github.com/codercup/unibest/issues"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=22",
+    "pnpm": ">=9"
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
@@ -86,7 +88,7 @@
     "build:quickapp-webview-union": "uni build -p quickapp-webview-union",
     "type-check": "vue-tsc --noEmit",
     "openapi-ts-request": "openapi-ts",
-    "prepare": "git init",
+    "prepare": "git init && node ./scripts/create-base-files.js",
     "lint": "eslint",
     "lint:fix": "eslint --fix"
   },
