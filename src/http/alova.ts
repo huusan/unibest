@@ -4,9 +4,10 @@ import AdapterUniapp from '@alova/adapter-uniapp'
 import { createAlova } from 'alova'
 import { createServerTokenAuthentication } from 'alova/client'
 import VueHook from 'alova/vue'
-import { LOGIN_PAGE } from '@/router/config'
+import { LOGIN_PAGE, LOGIN_PAGE_ENABLE_IN_MP } from '@/router/config'
 import { useTokenStore } from '@/store'
-import { ResultEnum, ShowMessage } from './tools/enum'
+import { isMp } from '@/utils/platform'
+import { ContentTypeEnum, ResultEnum, ShowMessage } from './tools/enum'
 
 // 配置动态Tag
 export const API_DOMAINS = {
@@ -48,10 +49,16 @@ const { onAuthRequired, onResponseRefreshToken } = createServerTokenAuthenticati
         await tokenStore.refreshToken()
       }
       catch (error) {
-        // 切换到登录页
-        uni.reLaunch({ url: LOGIN_PAGE })
-        // 并抛出错误
-        throw error
+        if (isMp && !LOGIN_PAGE_ENABLE_IN_MP) {
+          const tokenStore = useTokenStore()
+          await tokenStore.wxLogin()
+        } else {
+          // 切换到登录页
+          uni.reLaunch({ url: LOGIN_PAGE })
+          // 并抛出错误
+          throw error
+        }
+
       }
     },
   },
@@ -68,11 +75,11 @@ const alovaInstance = createAlova({
 
   beforeRequest: onAuthRequired(async (method) => {
     // 设置默认 Content-Type
-    // method.config.headers = {
-    //   ContentType: ContentTypeEnum.JSON,
-    //   Accept: 'application/json, text/plain, */*',
-    //   ...method.config.headers,
-    // }
+    method.config.headers = {
+      ContentType: ContentTypeEnum.JSON,
+      Accept: 'application/json, text/plain, */*',
+      ...method.config.headers,
+    }
 
     const { config } = method
 
