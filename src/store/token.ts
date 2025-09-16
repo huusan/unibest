@@ -94,12 +94,14 @@ export const useTokenStore = defineStore(
 
     /**
      * 用户登录
-     * @param credentials 登录参数
+     * 有的时候后端会用一个接口返回token和用户信息，有的时候会分开2个接口，一个获取token，一个获取用户信息
+     * （各有利弊，看业务场景和系统复杂度），这里使用2个接口返回的来模拟
+     * @param loginForm 登录参数
      * @returns 登录结果
      */
-    const login = async (credentials: ILoginForm) => {
+    const login = async (loginForm: ILoginForm) => {
       try {
-        const res = await _login(credentials)
+        const res = await _login(loginForm)
         console.log('普通登录-res: ', res)
         await _postLogin(res)
         uni.showToast({
@@ -120,6 +122,8 @@ export const useTokenStore = defineStore(
 
     /**
      * 微信登录
+     * 有的时候后端会用一个接口返回token和用户信息，有的时候会分开2个接口，一个获取token，一个获取用户信息
+     * （各有利弊，看业务场景和系统复杂度），这里使用2个接口返回的来模拟
      * @returns 登录结果
      */
     const wxLogin = async () => {

@@ -49,7 +49,7 @@ export const nativeTabbarList: NativeTabBarItem[] = [
 // badge 显示一个数字或 小红点（样式可以直接在 tabbar/index.vue 里面修改）
 export type CustomTabBarItemBadge = number | 'dot'
 
-export type iconType = 'uniUi' | 'uiLib' | 'unocss' | 'iconfont' | 'image'
+export type iconType = 'uiLib' | 'unocss' | 'iconfont' | 'image'
 export interface CustomTabBarItem {
   text: string
   pagePath: string
@@ -65,12 +65,12 @@ export const customTabbarList: CustomTabBarItem[] = [
   {
     text: '首页',
     pagePath: 'pages/index/index',
-    // 本框架内置了 uniapp 官方UI库 （uni-ui)的图标库
-    // 使用方式如：<uni-icons type="home" size="30"/>
-    // 图标列表地址：https://uniapp.dcloud.net.cn/component/uniui/uni-icons.html
+    // 注意 unocss 图标需要如下处理：（二选一）
+    // 1）在fg-tabbar.vue页面上引入一下并注释掉（见tabbar/index.vue代码第2行）
+    // 2）配置到 unocss.config.ts 的 safelist 中
     iconType: 'unocss',
-    icon: 'i-solar-home-2-bold-duotone',
-    badge: 'dot',
+    icon: 'i-carbon-home',
+    // badge: 'dot',
   },
   {
     text: '关于',
@@ -108,7 +108,7 @@ export const customTabbarList: CustomTabBarItem[] = [
     pagePath: 'pages/me/me',
     text: '我的',
     iconType: 'unocss',
-    icon: 'i-solar-user-bold',
+    icon: 'i-carbon-user',
     // badge: 100,
   },
   // 其他类型演示

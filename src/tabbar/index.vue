@@ -88,11 +88,7 @@ const itemProps = computed(() => {
         <wd-tabbar-item v-if="item.iconType === 'uiLib'" :icon="item.icon" v-bind="itemProps(item)"
                         :name="idx"
         />
-        <wd-tabbar-item v-else-if="item.iconType === 'uniUi'" v-bind="itemProps(item)" :name="idx">
-          <template #icon>
-            <uni-icons :type="item.icon as any" size="20" :color="getColorByIndex(idx)" />
-          </template>
-        </wd-tabbar-item>
+
         <wd-tabbar-item v-else-if="['unocss', 'iconfont'].includes(item.iconType)" v-bind="itemProps(item)"
                         :name="idx"
         >
