@@ -56,9 +56,7 @@ onLoad(() => {
 })
 // #endif
 
-function getColorByIndex(index: number) {
-  return tabbarStore.curIdx === index ? themeStore.themeVars.tabbarActiveColor : themeStore.themeVars.tabbarInactiveColor
-}
+
 
 function getImageByIndex(index: number, item: CustomTabBarItem) {
   if (!item.iconActive) {

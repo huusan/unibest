@@ -6,12 +6,12 @@
 
   onLaunch(async (options) => {
     console.log('App Launch', options)
-    const tokenStore = useTokenStore()
-    if (!tokenStore.hasLogin) {
-      await tokenStore.wxLogin()
-    }
+    // const tokenStore = useTokenStore()
+    // if (!tokenStore.hasLogin) {
+    //   await tokenStore.wxLogin()
+    // }
   })
-  
+
   onShow((options) => {
     console.log('App Show', options)
     // 处理直接进入页面路由的情况：如h5直接输入路由、微信小程序分享后进入等
