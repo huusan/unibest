@@ -1,8 +1,6 @@
 <script setup lang="ts">
-  import { onHide, onLaunch, onShow } from '@dcloudio/uni-app'
-  import { navigateToInterceptor } from '@/router/interceptor'
-  import { useTokenStore } from './store'
-  import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
+import { onHide, onLaunch, onShow } from '@dcloudio/uni-app'
+import { navigateToInterceptor } from '@/router/interceptor'
 
   onLaunch(async (options) => {
     console.log('App Launch', options)
