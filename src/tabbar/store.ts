@@ -1,9 +1,10 @@
 import type { CustomTabBarItem, CustomTabBarItemBadge } from './config'
 import { reactive } from 'vue'
 
-import { isNeedLoginMode } from '@/router/config'
+import { isNeedLoginMode, LOGIN_PAGE_ENABLE_IN_MP } from '@/router/config'
 import { isDev, judgeIsExcludePath } from '@/router/interceptor'
 import { useTokenStore } from '@/store/token'
+import { isMp } from '@/utils/platform'
 import { tabbarList as _tabbarList, customTabbarEnable } from './config'
 
 // TODO 1/2: 中间的鼓包tabbarItem的开关
@@ -40,7 +41,7 @@ const tabbarStore = reactive({
   setCurIdx(idx: number) {
     const tokenStore = useTokenStore()
     // 已登录 或 (url 需要登录 && 在白名单 || 不需要登录 && 不在黑名单) （关于 白名单|黑名单 逻辑： src/router/interceptor.ts）
-    if (tokenStore.hasLogin || (isNeedLoginMode && judgeIsExcludePath(tabbarList[idx].pagePath)) || (!isNeedLoginMode && !judgeIsExcludePath(tabbarList[idx].pagePath))) {
+    if (tokenStore.hasLogin || (isNeedLoginMode && judgeIsExcludePath(tabbarList[idx].pagePath)) || (!isNeedLoginMode && !judgeIsExcludePath(tabbarList[idx].pagePath)) || (isMp && !LOGIN_PAGE_ENABLE_IN_MP)) {
       this.curIdx = idx
       uni.setStorageSync('app-tabbar-index', idx)
     }

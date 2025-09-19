@@ -40,4 +40,16 @@ import { navigateToInterceptor } from '@/router/interceptor'
     height: 100%;
     vertical-align: middle;
   }
+
+  .page-wraper {
+    min-height: calc(100vh - var(--window-top));
+    box-sizing: border-box;
+    // 解决下级子元素marginTop导致的页面空白；
+    overflow: auto;
+    background: var(--wot-color-bg);
+  }
+
+  .wot-theme-dark.page-wraper {
+    background: var(--wot-dark-background2);
+  }
 </style>

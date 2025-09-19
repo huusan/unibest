@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useThemeStore } from '@/store'
+import { useManualThemeStore } from '@/store/manualTheme'
 import { safeAreaInsets } from '@/utils/systemInfo'
 
 defineOptions({
@@ -15,7 +16,8 @@ definePage({
   },
 })
 
-const themeStore = useThemeStore()
+  const themeStore = useThemeStore()
+  const manualThemeStore = useManualThemeStore()
 
 const description = ref(
   'unibest 是一个集成了多种工具和技术的 uniapp 开发模板，由 uniapp + Vue3 + Ts + Vite5 + UnoCss + VSCode 构建，模板具有代码提示、自动格式化、统一配置、代码片段等功能，并内置了许多常用的基本组件和基本功能，让你编写 uniapp 拥有 best 体验。',
@@ -28,10 +30,24 @@ onLoad(() => {
 </script>
 
 <template>
-  <view class="bg-white px-4 pt-2" :style="{ marginTop: `${safeAreaInsets?.top}px` }">
+  <wd-navbar title="首页" placeholder  safe-area-inset-top fixed></wd-navbar>
+  <view class="px-4 pt-2" :style="{ marginTop: `${safeAreaInsets?.top}px` }">
     <view class="mt-10">
       <image src="/static/logo.svg" alt="" class="mx-auto block h-28 w-28" />
     </view>
+    <view class="mt-4 text-center">
+      <wd-button type="primary" class="ml-2" @click="useGlobalToast().success({ msg: '这是一个全局Toast提示' })">
+        设置暗黑/浅色主题
+      </wd-button>
+      <wd-button type="primary" class="ml-2" @click="useGlobalMessage().alert({ msg: '这是一个全局Message提示' })">
+        设置暗黑/浅色主题
+      </wd-button>
+      <wd-button type="primary" class="ml-2"
+        @click="useGlobalLoading().loading({ msg: '这是一个全局Loading提示' ,duration: 2000})">
+        设置暗黑/浅色主题
+      </wd-button>
+    </view>
+
     <view class="mt-4 text-center text-4xl text-[#d14328]">
       unibest
     </view>
@@ -87,10 +103,17 @@ onLoad(() => {
     <!-- #endif -->
 
     <view class="mt-4 text-center">
-      <wd-button type="primary" class="ml-2" @click="themeStore.setColorTheme('green')">
+      <wd-button type="primary" class="ml-2"
+        @click="manualThemeStore.setCurrentThemeColor({value: 'blue', name: '天空蓝', primary: '#007AFF'})">
         设置主题变量
       </wd-button>
     </view>
+    <view class="mt-4 text-center">
+      <wd-button type="primary" class="ml-2" @click="manualThemeStore.toggleTheme()">
+        设置暗黑/浅色主题
+      </wd-button>
+    </view>
+
     <view class="mt-4 text-center">
       UI组件官网：<text class="text-green-500">
         https://wot-design-uni.cn

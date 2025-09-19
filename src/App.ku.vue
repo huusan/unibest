@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useThemeStore } from '@/store'
 import tabbar from '@/tabbar/index.vue'
+import { useManualTheme } from './hooks/useManualTheme'
 import { isPageTabbar } from './tabbar/store'
-import { currRoute } from './utils'
+  import { currRoute } from './utils'
 
-const themeStore = useThemeStore()
+
+const { themeVars, theme } = useManualTheme()
 
 const isCurrentPageTabbar = ref(true)
 onShow(() => {
@@ -31,16 +31,20 @@ defineExpose({
 </script>
 
 <template>
-  <wd-config-provider :theme-vars="themeStore.themeVars" :theme="themeStore.theme">
-    <!-- 这个先隐藏了，知道这样用就行 -->
-    <view class="hidden text-center">
-      {{ helloKuRoot }}，这里可以配置全局的东西
-    </view>
-
+  <wd-config-provider :theme-vars="themeVars" :theme="theme"
+                      :custom-class="`page-wraper ${theme}`"
+  >
     <KuRootView />
 
     <tabbar v-if="isCurrentPageTabbar" />
-    <wd-toast />
+    <wd-notify />
     <wd-message-box />
+    <wd-toast />
+    <global-loading />
+    <global-toast />
+    <global-message />
+    <!-- #ifdef MP-WEIXIN -->
+    <privacy-popup />
+    <!-- #endif -->
   </wd-config-provider>
 </template>

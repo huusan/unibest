@@ -113,9 +113,9 @@ const itemProps = computed(() => {
   width: 120rpx;
   height: 120rpx;
   border-radius: 50%;
-  border: 2rpx solid var(--wot-tabbar-active-color);
+  border: 2rpx solid var(--wot-color-theme);
   box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
-  background-color: var(--wot-tabbar-active-color);
+  background-color: var(--wot-color-theme);
 
   display: flex;
   justify-content: center;
