@@ -8,7 +8,9 @@
   // #ifdef MP-WEIXIN
   // 将自定义节点设置成虚拟的（去掉自定义组件包裹层），更加接近Vue组件的表现，能更好的使用flex属性
   defineOptions({
+    addGlobalClass: true,
     virtualHost: true,
+    styleIsolation: 'shared',
   })
 
   const themeStore = useThemeStore()
@@ -82,7 +84,8 @@
       <block v-for="(item, idx) in tabbarList" :key="item.pagePath">
         <wd-tabbar-item v-if="item.iconType === 'uiLib'" :icon="item.icon" v-bind="itemProps(item)" :name="idx" />
 
-        <wd-tabbar-item v-else-if="[ 'unocss', 'iconfont' ].includes(item.iconType)" v-bind="itemProps(item)" :name="idx">
+        <wd-tabbar-item v-else-if="[ 'unocss', 'iconfont' ].includes(item.iconType)" v-bind="itemProps(item)"
+          :name="idx">
           <template #icon>
             <view class="h-50rpx w-50rpx"
               :class="[ item.icon, { 'is-active': idx === tabbarStore.curIdx, 'is-inactive': idx !== tabbarStore.curIdx }, { 'bulge-icon': item?.isBulge } ]" />

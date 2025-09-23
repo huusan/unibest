@@ -109,9 +109,6 @@ declare global {
   // @ts-ignore
   export type { ThemeColorOption, ThemeMode } from '../hooks/useManualTheme'
   import('../hooks/useManualTheme')
-  // @ts-ignore
-  export type { TabbarItem } from '../hooks/useTabbar'
-  import('../hooks/useTabbar')
 }
 
 // for vue template auto import
@@ -201,7 +198,6 @@ declare module 'vue' {
     readonly useManualTheme: UnwrapRef<typeof import('../hooks/useManualTheme')['useManualTheme']>
     readonly useModel: UnwrapRef<typeof import('vue')['useModel']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
-    readonly useTabbar: UnwrapRef<typeof import('../hooks/useTabbar')['useTabbar']>
     readonly useTemplateRef: UnwrapRef<typeof import('vue')['useTemplateRef']>
     readonly useTheme: UnwrapRef<typeof import('../hooks/useTheme')['useTheme']>
     readonly useUpload: UnwrapRef<typeof import('../hooks/useUpload')['default']>

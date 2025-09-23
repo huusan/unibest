@@ -44,7 +44,7 @@ defineExpose({
     <global-toast />
     <global-message />
     <!-- #ifdef MP-WEIXIN -->
-    <!-- <privacy-popup /> -->
+    <privacy-popup />
     <!-- #endif -->
   </wd-config-provider>
 </template>

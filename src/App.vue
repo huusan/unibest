@@ -10,6 +10,7 @@ onLaunch(async (options) => {
   if (isMp && !LOGIN_PAGE_ENABLE_IN_MP) {
     const tokenStore = useTokenStore()
     if (!tokenStore.hasLogin) {
+      console.log('用户未登录，进行登录操作');
       await tokenStore.wxLogin()
     }
   }
