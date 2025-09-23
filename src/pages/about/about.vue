@@ -3,9 +3,6 @@ import { isApp, isAppAndroid, isAppHarmony, isAppIOS, isAppPlus, isH5, isMpWeixi
 import { LOGIN_PAGE } from '@/router/config'
 import { useTokenStore } from '@/store'
 import { tabbarStore } from '@/tabbar/store'
-import RequestOpenApiComp from './components/request-openapi.vue'
-import RequestComp from './components/request.vue'
-import VBindCss from './components/VBindCss.vue'
 
 definePage({
   style: {
@@ -112,7 +109,6 @@ onShow(() => {
     <button class="mt-4 w-60 text-center" @click="setTabbarBadge">
       设置tabbarBadge
     </button>
-    <RequestOpenApiComp />
     <RequestComp />
     <VBindCss />
     <view class="mb-6 h-1px bg-#eee" />
