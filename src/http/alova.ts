@@ -38,27 +38,30 @@ const { onAuthRequired, onResponseRefreshToken } = createServerTokenAuthenticati
 
   refreshTokenOnError: {
     isExpired: (error, method) => {
-      if (method.meta?.authRole === 'refreshToken') {
-        return false
-      }
+
       return error.response?.status === ResultEnum.Unauthorized
     },
     handler: async () => {
       try {
-        const tokenStore = useTokenStore()
-        await tokenStore.refreshToken()
+        if (import.meta.env.VITE_AUTH_MODE !== 'double') {
+          const tokenStore = useTokenStore()
+          await tokenStore.wxLogin()
+        } else {
+          const tokenStore = useTokenStore()
+          await tokenStore.refreshToken()
+        }
       }
       catch (error) {
         if (isMp && !LOGIN_PAGE_ENABLE_IN_MP) {
           const tokenStore = useTokenStore()
           await tokenStore.wxLogin()
-        } else {
+        }
+        else {
           // 切换到登录页
           uni.reLaunch({ url: LOGIN_PAGE })
           // 并抛出错误
           throw error
         }
-
       }
     },
   },
@@ -68,7 +71,7 @@ const { onAuthRequired, onResponseRefreshToken } = createServerTokenAuthenticati
  * alova 请求实例
  */
 const alovaInstance = createAlova({
-  baseURL: import.meta.env.VITE_APP_PROXY_PREFIX,
+  baseURL: import.meta.env.VITE_SERVER_BASEURL + (import.meta.env.VITE_APP_PROXY_ENABLE ? import.meta.env.VITE_APP_PROXY_PREFIX : ''),
   ...AdapterUniapp(),
   timeout: 5000,
   statesHook: VueHook,
@@ -88,6 +91,7 @@ const alovaInstance = createAlova({
       method.baseURL = config.meta.domain
       console.log('当前域名', method.baseURL)
     }
+    console.log('请求地址:', method) // 打印请求地址
   }),
 
   responded: onResponseRefreshToken((response, method) => {
