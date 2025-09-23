@@ -1,12 +1,12 @@
 import type { uniappRequestAdapter } from '@alova/adapter-uniapp'
 import type { IResponse } from './types'
 import AdapterUniapp from '@alova/adapter-uniapp'
+import { isMp } from '@uni-helper/uni-env'
 import { createAlova } from 'alova'
 import { createServerTokenAuthentication } from 'alova/client'
 import VueHook from 'alova/vue'
 import { LOGIN_PAGE, LOGIN_PAGE_ENABLE_IN_MP } from '@/router/config'
 import { useTokenStore } from '@/store'
-import { isMp } from '@/utils/platform'
 import { ContentTypeEnum, ResultEnum, ShowMessage } from './tools/enum'
 
 // 配置动态Tag
@@ -38,7 +38,6 @@ const { onAuthRequired, onResponseRefreshToken } = createServerTokenAuthenticati
 
   refreshTokenOnError: {
     isExpired: (error, method) => {
-
       return error.response?.status === ResultEnum.Unauthorized
     },
     handler: async () => {
@@ -46,7 +45,8 @@ const { onAuthRequired, onResponseRefreshToken } = createServerTokenAuthenticati
         if (import.meta.env.VITE_AUTH_MODE !== 'double') {
           const tokenStore = useTokenStore()
           await tokenStore.wxLogin()
-        } else {
+        }
+        else {
           const tokenStore = useTokenStore()
           await tokenStore.refreshToken()
         }

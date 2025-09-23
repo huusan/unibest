@@ -1,10 +1,10 @@
 import type { CustomTabBarItem, CustomTabBarItemBadge } from './config'
-import { reactive } from 'vue'
+import { isMp } from '@uni-helper/uni-env'
 
+import { reactive } from 'vue'
 import { isNeedLoginMode, LOGIN_PAGE_ENABLE_IN_MP } from '@/router/config'
 import { isDev, judgeIsExcludePath } from '@/router/interceptor'
 import { useTokenStore } from '@/store/token'
-import { isMp } from '@/utils/platform'
 import { tabbarList as _tabbarList, customTabbarEnable } from './config'
 
 // TODO 1/2: 中间的鼓包tabbarItem的开关

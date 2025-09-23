@@ -71,6 +71,7 @@ declare global {
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
+  const themeColorOptions: typeof import('../hooks/useManualTheme')['themeColorOptions']
   const toRaw: typeof import('vue')['toRaw']
   const toRef: typeof import('vue')['toRef']
   const toRefs: typeof import('vue')['toRefs']
@@ -80,11 +81,17 @@ declare global {
   const useAttrs: typeof import('vue')['useAttrs']
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
+  const useGlobalLoading: typeof import('../hooks/useGlobalLoading')['useGlobalLoading']
+  const useGlobalMessage: typeof import('../hooks/useGlobalMessage')['useGlobalMessage']
+  const useGlobalToast: typeof import('../hooks/useGlobalToast')['useGlobalToast']
   const useId: typeof import('vue')['useId']
+  const useManualTheme: typeof import('../hooks/useManualTheme')['useManualTheme']
   const useModel: typeof import('vue')['useModel']
   const useRequest: typeof import('../hooks/useRequest')['default']
   const useSlots: typeof import('vue')['useSlots']
+  const useTabbar: typeof import('../hooks/useTabbar')['useTabbar']
   const useTemplateRef: typeof import('vue')['useTemplateRef']
+  const useTheme: typeof import('../hooks/useTheme')['useTheme']
   const useUpload: typeof import('../hooks/useUpload')['default']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']
@@ -96,6 +103,15 @@ declare global {
   // @ts-ignore
   export type { Component, Slot, Slots, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, ShallowRef, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
+  // @ts-ignore
+  export type { GlobalMessageOptions } from '../hooks/useGlobalMessage'
+  import('../hooks/useGlobalMessage')
+  // @ts-ignore
+  export type { ThemeColorOption, ThemeMode } from '../hooks/useManualTheme'
+  import('../hooks/useManualTheme')
+  // @ts-ignore
+  export type { TabbarItem } from '../hooks/useTabbar'
+  import('../hooks/useTabbar')
 }
 
 // for vue template auto import
@@ -168,6 +184,7 @@ declare module 'vue' {
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
+    readonly themeColorOptions: UnwrapRef<typeof import('../hooks/useManualTheme')['themeColorOptions']>
     readonly toRaw: UnwrapRef<typeof import('vue')['toRaw']>
     readonly toRef: UnwrapRef<typeof import('vue')['toRef']>
     readonly toRefs: UnwrapRef<typeof import('vue')['toRefs']>
@@ -177,11 +194,16 @@ declare module 'vue' {
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
+    readonly useGlobalLoading: UnwrapRef<typeof import('../hooks/useGlobalLoading')['useGlobalLoading']>
+    readonly useGlobalMessage: UnwrapRef<typeof import('../hooks/useGlobalMessage')['useGlobalMessage']>
+    readonly useGlobalToast: UnwrapRef<typeof import('../hooks/useGlobalToast')['useGlobalToast']>
     readonly useId: UnwrapRef<typeof import('vue')['useId']>
+    readonly useManualTheme: UnwrapRef<typeof import('../hooks/useManualTheme')['useManualTheme']>
     readonly useModel: UnwrapRef<typeof import('vue')['useModel']>
-    readonly useRequest: UnwrapRef<typeof import('../hooks/useRequest')['default']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
+    readonly useTabbar: UnwrapRef<typeof import('../hooks/useTabbar')['useTabbar']>
     readonly useTemplateRef: UnwrapRef<typeof import('vue')['useTemplateRef']>
+    readonly useTheme: UnwrapRef<typeof import('../hooks/useTheme')['useTheme']>
     readonly useUpload: UnwrapRef<typeof import('../hooks/useUpload')['default']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchEffect: UnwrapRef<typeof import('vue')['watchEffect']>

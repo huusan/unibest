@@ -84,17 +84,23 @@ export function useManualTheme() {
     store.initTheme()
   }
 
+  /**
+   * 主题变化监听器
+   * @param res {OnThemeChangeCallbackResult}
+   */
+  const themeChangeListener = (res: UniApp.OnThemeChangeCallbackResult) => {
+    if (store.followSystem) {
+      toggleTheme(res.theme as ThemeMode)
+    }
+  }
+
   // 组件挂载前初始化主题
   onBeforeMount(() => {
     initTheme()
 
     // 监听系统主题变化
     if (typeof uni !== 'undefined' && uni.onThemeChange) {
-      uni.onThemeChange((res) => {
-        if (store.followSystem) {
-          toggleTheme(res.theme as ThemeMode)
-        }
-      })
+      uni.onThemeChange(themeChangeListener)
     }
   })
 
@@ -106,11 +112,7 @@ export function useManualTheme() {
   // 组件卸载时清理监听
   onUnmounted(() => {
     if (typeof uni !== 'undefined' && uni.offThemeChange) {
-      uni.offThemeChange((res) => {
-        if (store.followSystem) {
-          toggleTheme(res.theme as ThemeMode)
-        }
-      })
+      uni.offThemeChange(themeChangeListener)
     }
   })
 

@@ -1,6 +1,5 @@
 import type { ThemeColorOption, ThemeMode, ThemeState } from '@/hooks/types/theme'
 import { defineStore } from 'pinia'
-import { themeColorOptions } from '@/hooks/types/theme'
 
 /**
  * 完整版主题状态管理
@@ -32,7 +31,7 @@ export const useManualThemeStore = defineStore('manual-theme', () => {
     darkColor2: '#e0e0e0',
     darkColor3: '#a0a0a0',
     colorTheme: currentThemeColor.value.primary,
-    colorBg: '#f0f0f0',
+    colorBg: '#ffffff',
     tabbarInactiveColor: '#999',
     tabbarItemIconSize: '24px',
     tabbarItemTitleFontSize: '10px',

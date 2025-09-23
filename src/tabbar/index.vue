@@ -1,7 +1,7 @@
 <script setup lang="ts">
-// i-carbon-code
 import type { CustomTabBarItem } from './config'
 import { computed } from 'vue'
+// i-carbon-code
 import { useThemeStore } from '@/store/theme'
 import { customTabbarEnable, needHideNativeTabbar, tabbarCacheEnable } from './config'
 import { tabbarList, tabbarStore } from './store'
@@ -56,8 +56,6 @@ onLoad(() => {
 })
 // #endif
 
-
-
 function getImageByIndex(index: number, item: CustomTabBarItem) {
   if (!item.iconActive) {
     console.warn('image 模式下，需要配置 iconActive (高亮时的图片)，否则无法切换高亮图片')
@@ -69,7 +67,8 @@ function getImageByIndex(index: number, item: CustomTabBarItem) {
 const itemProps = computed(() => {
   return (item: CustomTabBarItem) => {
     return {
-      title: item?.isBulge ? '' : item.text,
+      title: item.isBulge ? ' ' : item?.text,
+      // title: item?.text,
       isDot: item.badge === 'dot',
       value: typeof item.badge === 'number' ? item.badge : null,
     }
@@ -79,13 +78,11 @@ const itemProps = computed(() => {
 
 <template>
   <block v-if="customTabbarEnable">
-    <wd-tabbar :model-value="tabbarStore.curIdx" :bordered="true" :safe-area-inset-bottom="true" :placeholder="true"
-               :fixed="true" @change="handleClick"
+    <wd-tabbar :model-value="tabbarStore.curIdx" :bordered="true" shape="round" :safe-area-inset-bottom="true"
+               :placeholder="true" :fixed="true" @change="handleClick"
     >
       <block v-for="(item, idx) in tabbarList" :key="item.pagePath">
-        <wd-tabbar-item v-if="item.iconType === 'uiLib'" :icon="item.icon" v-bind="itemProps(item)"
-                        :name="idx"
-        />
+        <wd-tabbar-item v-if="item.iconType === 'uiLib'" :icon="item.icon" v-bind="itemProps(item)" :name="idx" />
 
         <wd-tabbar-item v-else-if="['unocss', 'iconfont'].includes(item.iconType)" v-bind="itemProps(item)"
                         :name="idx"
@@ -108,18 +105,40 @@ const itemProps = computed(() => {
 
 <style scoped lang="scss">
   .bulge-icon {
-  position: relative;
-  top: -40rpx;
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 50%;
-  border: 2rpx solid var(--wot-color-theme);
-  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
-  background-color: var(--wot-color-theme);
+  --bulge-offset: -0%; // 定义变量
+  // 使用 transform 实现上浮效果，性能更好，且更灵活
+  transform: translateY(var(--bulge-offset));
 
+  // 尺寸和圆角
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+
+  // 边框和阴影
+  border: 2rpx solid #f0f0f0; // 给一个浅色边框，避免和背景融为一体
+  box-shadow: 0 -4rpx 10rpx rgba(0, 0, 0, 0.05); // 阴影调整，更有立体感
+
+  // 背景色使用主题色
+  background-color: var(--wot-color-theme);
+  // unocss/preset-icons 通过 color 控制图标颜色
+  color: var(--wot-color-white);
+
+  // flex 布局居中图标
   display: flex;
   justify-content: center;
   align-items: center;
+
+  // 提高层级，避免被遮挡
   z-index: 10;
+
+  // 增加过渡效果，让点击反馈更自然
+  transition: transform 0.2s ease-in-out;
+
+  // 向上移动后，通过负 margin-bottom 抵消原来占用的空间，让布局更紧凑
+  margin-bottom: var(--bulge-offset);
+}
+
+.bulge-icon:active {
+  transform: translateY(var(--bulge-offset)) scale(0.9); // 点击时缩小，增加交互感
 }
 </style>
