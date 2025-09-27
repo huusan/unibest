@@ -25,6 +25,11 @@ export const useThemeStore = defineStore(
       tabbarInactiveColor: '#999',
       tabbarItemIconSize: '24px',
       tabbarItemTitleFontSize: '10px',
+      searchInputBg: '#dce5ef',
+      searchInputHeight: '40px',
+      progressPadding: '0',
+      cellWrapperPadding: '0',
+      cellPadding: '0',
     })
 
     /** 设置主题变量 */

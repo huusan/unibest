@@ -127,7 +127,7 @@
     align-items: center;
 
     // 提高层级，避免被遮挡
-    z-index: 10;
+    z-index: 2;
 
     // 增加过渡效果，让点击反馈更自然
     transition: transform 0.2s ease-in-out;

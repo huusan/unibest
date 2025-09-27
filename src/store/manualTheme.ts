@@ -35,6 +35,11 @@ export const useManualThemeStore = defineStore('manual-theme', () => {
     tabbarInactiveColor: '#999',
     tabbarItemIconSize: '24px',
     tabbarItemTitleFontSize: '10px',
+    searchInputBg: '#dce5ef',
+    searchInputHeight: '40px',
+    progressPadding: '0',
+    cellWrapperPadding: '0',
+    cellPadding: '0',
   })
 
   /** 是否暗黑模式 */

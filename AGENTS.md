@@ -2,7 +2,12 @@
 trigger: always_on
 alwaysApply: true
 ---
-不要处理eslint问题
+不要修复lint错误
+不要修复prettier问题
+无需导入wot ui和vue 组件 已经内置
+优先使用unocss
+优先使用wot ui组件
+优先使用原子化类名
 
 # unibest 项目概览
 
