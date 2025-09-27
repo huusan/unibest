@@ -71,7 +71,7 @@ const { onAuthRequired, onResponseRefreshToken } = createServerTokenAuthenticati
  * alova 请求实例
  */
 const alovaInstance = createAlova({
-  baseURL: API_DOMAINS.DEFAULT,
+  baseURL: API_DOMAINS.DEFAULT + (import.meta.env.VITE_APP_PROXY_ENABLE ? import.meta.env.VITE_APP_PROXY_PREFIX : ''),
   ...AdapterUniapp(),
   timeout: 5000,
   statesHook: VueHook,
