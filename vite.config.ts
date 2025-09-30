@@ -1,5 +1,10 @@
 import path from 'node:path'
 import process from 'node:process'
+/**
+ * 小程序占位组件 componentPlaceholder
+ * @ see https://github.com/chouchouji/vite-plugin-component-placeholder
+ */
+import ComponentPlaceholder from '@binbinji/vite-plugin-component-placeholder'
 import Uni from '@uni-helper/plugin-uni'
 import Components from '@uni-helper/vite-plugin-uni-components'
 // @see https://uni-helper.js.org/vite-plugin-uni-layouts
@@ -69,7 +74,6 @@ export default defineConfig(({ command, mode }) => {
         // pages 目录为 src/pages，分包目录不能配置在pages目录下！！
         // 是个数组，可以配置多个，但是不能为pages里面的目录！！
         subPackages: [
-          'src/pages-fg', // 这个是相对必要的路由，尽量留着（登录页、注册页、404页等）
           'src/pages-sub', // 这个多为示例代码，参考用的，开发完后注释掉即可（或者直接删除）
         ],
         dts: 'src/types/uni-pages.d.ts',
@@ -146,6 +150,7 @@ export default defineConfig(({ command, mode }) => {
       // 若存在改变 pages.json 的插件，请将 UniKuRoot 放置其后
       UniKuRoot(),
       Uni(),
+      ComponentPlaceholder(),
       // 自动打开开发者工具插件 (必须修改 .env 文件中的 VITE_WX_APPID)
       openDevTools(),
     ],

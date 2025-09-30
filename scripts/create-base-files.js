@@ -215,20 +215,6 @@ const pages = {
       },
     },
   ],
-  subPackages: [
-    {
-      root: 'pages-sub',
-      pages: [
-        {
-          path: 'demo/index',
-          type: 'page',
-          style: {
-            navigationBarTitleText: '分包页面',
-          },
-        },
-      ],
-    },
-  ],
 }
 
 // 使用修复后的 __dirname 来解析文件路径
