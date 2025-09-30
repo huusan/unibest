@@ -71,7 +71,7 @@ declare global {
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
-  const themeColorOptions: typeof import('../hooks/useManualTheme')['themeColorOptions']
+  const themeColorOptions: typeof import('../hooks/useTheme')['themeColorOptions']
   const toRaw: typeof import('vue')['toRaw']
   const toRef: typeof import('vue')['toRef']
   const toRefs: typeof import('vue')['toRefs']
@@ -85,7 +85,7 @@ declare global {
   const useGlobalMessage: typeof import('../hooks/useGlobalMessage')['useGlobalMessage']
   const useGlobalToast: typeof import('../hooks/useGlobalToast')['useGlobalToast']
   const useId: typeof import('vue')['useId']
-  const useManualTheme: typeof import('../hooks/useManualTheme')['useManualTheme']
+  const useManualTheme: typeof import('../hooks/useTheme')['useTheme']
   const useModel: typeof import('vue')['useModel']
   const useRequest: typeof import('../hooks/useRequest')['default']
   const useScroll: typeof import('../hooks/useScroll')['useScroll']
@@ -108,8 +108,8 @@ declare global {
   export type { GlobalMessageOptions } from '../hooks/useGlobalMessage'
   import('../hooks/useGlobalMessage')
   // @ts-ignore
-  export type { ThemeColorOption, ThemeMode } from '../hooks/useManualTheme'
-  import('../hooks/useManualTheme')
+  export type { ThemeColorOption, ThemeMode } from '../hooks/useTheme'
+  import('../hooks/useTheme')
 }
 
 // for vue template auto import
@@ -182,7 +182,7 @@ declare module 'vue' {
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
-    readonly themeColorOptions: UnwrapRef<typeof import('../hooks/useManualTheme')['themeColorOptions']>
+    readonly themeColorOptions: UnwrapRef<typeof import('../hooks/useTheme')['themeColorOptions']>
     readonly toRaw: UnwrapRef<typeof import('vue')['toRaw']>
     readonly toRef: UnwrapRef<typeof import('vue')['toRef']>
     readonly toRefs: UnwrapRef<typeof import('vue')['toRefs']>
@@ -196,7 +196,6 @@ declare module 'vue' {
     readonly useGlobalMessage: UnwrapRef<typeof import('../hooks/useGlobalMessage')['useGlobalMessage']>
     readonly useGlobalToast: UnwrapRef<typeof import('../hooks/useGlobalToast')['useGlobalToast']>
     readonly useId: UnwrapRef<typeof import('vue')['useId']>
-    readonly useManualTheme: UnwrapRef<typeof import('../hooks/useManualTheme')['useManualTheme']>
     readonly useModel: UnwrapRef<typeof import('vue')['useModel']>
     readonly useScroll: UnwrapRef<typeof import('../hooks/useScroll')['useScroll']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>

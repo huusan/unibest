@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import tabbar from '@/tabbar/index.vue'
-import { useManualTheme } from './hooks/useManualTheme'
+import { useTheme } from './hooks/useTheme'
 import { isPageTabbar } from './tabbar/store'
-  import { currRoute } from './utils'
+import { currRoute } from './utils'
 
-
-const { themeVars, theme } = useManualTheme()
+const { themeVars, theme } = useTheme()
 
 const isCurrentPageTabbar = ref(true)
 onShow(() => {
@@ -20,8 +19,6 @@ onShow(() => {
     isCurrentPageTabbar.value = isPageTabbar(path)
   }
 })
-
-const helloKuRoot = ref('Hello AppKuVue')
 
 const exposeRef = ref('this is form app.Ku.vue')
 

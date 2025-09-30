@@ -1,37 +1,42 @@
-import type { ThemeMode } from '@/hooks/types/theme'
-import { useThemeStore } from '@/store'
+import type { ThemeColorOption, ThemeMode } from '@/hooks/types/theme'
+import { themeColorOptions } from '@/hooks/types/theme'
+import { useThemeStore } from '@/store/theme'
 
 /**
- * 简化版系统主题管理组合式API
+ * 完整版主题管理组合式API
  *
  * 功能特性：
- * - 仅跟随系统主题变化
- * - 自动响应系统主题切换
- * - 导航栏颜色通过 theme.json 自动处理
- * - 轻量级，无额外功能
+ * - 支持手动切换暗黑模式
+ * - 支持主题色选择
+ * - 支持跟随系统主题
+ * - 自动同步导航栏颜色
+ * - 持久化用户设置
  *
  * 适用场景：
- * - 只需要系统主题适应的简单应用
- * - 不需要用户手动控制主题的应用
- * - 追求轻量级主题管理的应用
- *
- * 注意事项：
- * - 不支持手动切换主题
- * - 不支持主题色自定义
- * - 导航栏颜色依赖 theme.json 配置
+ * - 需要用户手动控制主题的应用
+ * - 需要主题色自定义的应用
+ * - 需要完整主题管理功能的复杂应用
  *
  * @example
  * ```vue
  * <script setup>
- * import { useTheme } from '@/composables/useTheme'
+ * import { useTheme } from '@/hooks/useTheme'
  *
- * const { theme, isDark, themeVars } = useTheme()
+ * const {
+ *   theme,
+ *   isDark,
+ *   toggleTheme,
+ *   openThemeColorPicker,
+ *   currentThemeColor,
+ *   themeVars
+ * } = useTheme()
  * </script>
  *
  * <template>
  *   <wd-config-provider :theme-vars="themeVars">
  *     <view :class="{ 'dark-mode': isDark }">
- *       <text>当前主题: {{ theme }}</text>
+ *       <wd-button @click="toggleTheme">切换主题</wd-button>
+ *       <wd-button @click="openThemeColorPicker">选择主题色</wd-button>
  *     </view>
  *   </wd-config-provider>
  * </template>
@@ -39,33 +44,101 @@ import { useThemeStore } from '@/store'
  */
 export function useTheme() {
   const store = useThemeStore()
+  const showThemeColorSheet = ref(false)
 
-  // 组件挂载前初始化系统主题
+  /**
+   * 切换暗黑模式
+   * @param mode 指定主题模式，不传则自动切换
+   */
+  function toggleTheme(mode?: ThemeMode) {
+    store.toggleTheme(mode)
+  }
+
+  /**
+   * 打开主题色选择器
+   */
+  function openThemeColorPicker() {
+    showThemeColorSheet.value = true
+  }
+
+  /**
+   * 关闭主题色选择器
+   */
+  function closeThemeColorPicker() {
+    showThemeColorSheet.value = false
+  }
+
+  /**
+   * 选择主题色
+   * @param option 主题色选项
+   */
+  function selectThemeColor(option: ThemeColorOption) {
+    store.setCurrentThemeColor(option)
+    closeThemeColorPicker()
+  }
+
+  /**
+   * 初始化主题
+   */
+  function initTheme() {
+    store.initTheme()
+  }
+
+  /**
+   * 主题变化监听器
+   * @param res {OnThemeChangeCallbackResult}
+   */
+  const themeChangeListener = (res: UniApp.OnThemeChangeCallbackResult) => {
+    if (store.followSystem) {
+      toggleTheme(res.theme as ThemeMode)
+    }
+  }
+
+  // 组件挂载前初始化主题
   onBeforeMount(() => {
-    store.initSystemTheme()
+    initTheme()
+
     // 监听系统主题变化
     if (typeof uni !== 'undefined' && uni.onThemeChange) {
-      uni.onThemeChange((res) => {
-        // 系统主题变化时自动更新，导航栏颜色由 theme.json 自动处理
-        store.setTheme(res.theme as ThemeMode)
-        console.log('系统主题已切换至:', res.theme)
-      })
+      uni.onThemeChange(themeChangeListener)
     }
+  })
+
+  // 页面显示时更新导航栏颜色，确保每次切换页面时导航栏颜色都是正确的
+  onShow(() => {
+    store.setNavigationBarColor()
   })
 
   // 组件卸载时清理监听
   onUnmounted(() => {
     if (typeof uni !== 'undefined' && uni.offThemeChange) {
-      uni.offThemeChange((res) => {
-        store.setTheme(res.theme as ThemeMode)
-      })
+      uni.offThemeChange(themeChangeListener)
     }
   })
 
   return {
-    // 状态（只读）
+    // 状态
     theme: computed(() => store.theme),
     isDark: computed(() => store.isDark),
+    followSystem: computed(() => store.followSystem),
+    hasUserSet: computed(() => store.hasUserSet),
+    currentThemeColor: computed(() => store.currentThemeColor),
     themeVars: computed(() => store.themeVars),
+    showThemeColorSheet,
+
+    // 常量
+    themeColorOptions,
+
+    // 方法
+    initTheme,
+    toggleTheme,
+    setFollowSystem: store.setFollowSystem,
+    openThemeColorPicker,
+    closeThemeColorPicker,
+    selectThemeColor,
   }
 }
+
+// 导出类型和常量供外部使用
+export { themeColorOptions }
+export type { ThemeColorOption, ThemeMode }

@@ -51,7 +51,7 @@ export default defineConfig({
     },
   ],
   // 动态图标需要在这里配置，或者写在vue页面中注释掉
-  safelist: ['i-carbon-code', 'i-carbon-home', 'i-carbon-user', 'i-carbon-home', 'i-carbon-user-filled', 'i-solar-home-2-bold-duotone', 'i-solar-user-bold', 'i-solar-add-circle-bold'],
+  safelist: ['i-mdi-plus-circle', 'i-mdi-shield-check', 'i-mdi-shield-check-outline', 'i-mdi-qrcode-scan', 'i-mdi-keyboard-outline', 'i-mdi-content-copy', 'i-mdi-reload', 'i-mdi-key-variant', 'i-mdi-cog-outline', 'i-mdi-lock-outline', 'i-mdi-pencil-outline', 'i-mdi-trash-can-outline', 'i-mdi-check-circle', 'i-mdi-alert-circle-outline', 'i-mdi-home-variant-outline', 'i-mdi-qrcode', 'i-mdi-account', 'i-mdi-home'],
   rules: [
     [
       'p-safe',

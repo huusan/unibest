@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { useThemeStore } from '@/store'
-import { useManualThemeStore } from '@/store/manualTheme'
 import { safeAreaInsets } from '@/utils/systemInfo'
 
 defineOptions({
@@ -17,7 +16,6 @@ definePage({
 })
 
 const themeStore = useThemeStore()
-const manualThemeStore = useManualThemeStore()
 
 const description = ref(
   'unibest 是一个集成了多种工具和技术的 uniapp 开发模板，由 uniapp + Vue3 + Ts + Vite5 + UnoCss + VSCode 构建，模板具有代码提示、自动格式化、统一配置、代码片段等功能，并内置了许多常用的基本组件和基本功能，让你编写 uniapp 拥有 best 体验。',
@@ -113,13 +111,13 @@ function gotoAbout() {
 
     <view class="mt-4 text-center">
       <wd-button type="primary" class="ml-2"
-                 @click="manualThemeStore.setCurrentThemeColor({ value: 'blue', name: '天空蓝', primary: '#007AFF' })"
+                 @click="themeStore.setCurrentThemeColor({ value: 'blue', name: '天空蓝', primary: '#007AFF' })"
       >
         设置主题变量
       </wd-button>
     </view>
     <view class="mt-4 text-center">
-      <wd-button type="primary" class="ml-2" @click="manualThemeStore.toggleTheme()">
+      <wd-button type="primary" class="ml-2" @click="themeStore.toggleTheme()">
         设置暗黑/浅色主题
       </wd-button>
     </view>

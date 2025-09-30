@@ -129,8 +129,7 @@
     "@dcloudio/vite-plugin-uni": "3.0.0-4070620250821001",
     "@esbuild/darwin-arm64": "0.20.2",
     "@esbuild/darwin-x64": "0.20.2",
-    "@iconify-json/carbon": "^1.2.13",
-    "@iconify-json/solar": "^1.2.4",
+    "@iconify-json/mdi": "^1.2.3",
     "@rollup/rollup-darwin-x64": "^4.28.0",
     "@types/node": "^20.19.18",
     "@uni-helper/eslint-config": "0.5.0",
@@ -150,10 +149,10 @@
     "@vue/runtime-core": "^3.4.21",
     "@vue/tsconfig": "^0.1.3",
     "autoprefixer": "^10.4.21",
-    "cross-env": "^10.0.0",
+    "cross-env": "^10.1.0",
     "eslint": "^9.36.0",
     "eslint-plugin-format": "^1.0.2",
-    "lint-staged": "^16.2.1",
+    "lint-staged": "^16.2.3",
     "miniprogram-api-typings": "^4.1.0",
     "postcss": "^8.5.6",
     "postcss-html": "^1.8.0",
@@ -171,15 +170,15 @@
   },
   "pnpm": {
     "overrides": {
-      "unconfig": "7.3.2"
+      "unconfig": "7.3.3"
     }
   },
   "overrides": {
-    "unconfig": "7.3.2"
+    "unconfig": "7.3.3"
   },
   "resolutions": {
     "bin-wrapper": "npm:bin-wrapper-china",
-    "unconfig": "7.3.2"
+    "unconfig": "7.3.3"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged --allow-empty"

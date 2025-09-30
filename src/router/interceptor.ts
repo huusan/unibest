@@ -1,4 +1,7 @@
 import { isMp } from '@uni-helper/uni-env'
+import { useGlobalLoading } from '@/hooks/useGlobalLoading'
+import { useGlobalMessage } from '@/hooks/useGlobalMessage'
+import { useGlobalToast } from '@/hooks/useGlobalToast'
 /**
  * by 菲鸽 on 2025-08-19
  * 路由拦截，通常也是登录拦截
@@ -24,6 +27,12 @@ export const navigateToInterceptor = {
   // 注意，这里的url是 '/' 开头的，如 '/pages/index/index'，跟 'pages.json' 里面的 path 不同
   // 增加对相对路径的处理，BY 网友 @ideal
   invoke({ url, query }: { url: string, query?: Record<string, string> }) {
+    const loading = useGlobalLoading()
+    const toast = useGlobalToast()
+    const message = useGlobalMessage()
+    loading.close()
+    toast.close()
+    message.close()
     if (url === undefined) {
       return
     }

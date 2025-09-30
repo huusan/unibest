@@ -63,7 +63,7 @@ export const customTabbarList: CustomTabBarItem[] = [
     // 1）在fg-tabbar.vue页面上引入一下并注释掉（见tabbar/index.vue代码第2行）
     // 2）配置到 unocss.config.ts 的 safelist 中
     iconType: 'unocss',
-    icon: 'i-carbon-home',
+    icon: 'i-mdi-home',
     // badge: 'dot',
   },
   {
@@ -72,7 +72,7 @@ export const customTabbarList: CustomTabBarItem[] = [
     // 1）在fg-tabbar.vue页面上引入一下并注释掉（见tabbar/index.vue代码第2行）
     // 2）配置到 unocss.config.ts 的 safelist 中
     iconType: 'unocss',
-    icon: 'i-carbon-user',
+    icon: 'i-mdi-account',
     // badge: 10,
   },
   // 其他类型演示
