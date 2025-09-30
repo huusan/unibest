@@ -2,6 +2,9 @@
 import { isApp, isAppAndroid, isAppHarmony, isAppIOS, isAppPlus, isH5, isMpWeixin, isWeb } from '@uni-helper/uni-env'
 import { LOGIN_PAGE } from '@/router/config'
 import { useTokenStore } from '@/store'
+import RequestComp from './components/request.vue'
+import UploadComp from './components/Upload.vue'
+import VBindCss from './components/VBindCss.vue'
 
 definePage({
   style: {
@@ -104,6 +107,7 @@ onShow(() => {
       设置tabbarBadge
     </button>
     <RequestComp />
+    <UploadComp />
     <VBindCss />
     <view class="mb-6 h-1px bg-#eee" />
     <view class="mb-2 text-center">

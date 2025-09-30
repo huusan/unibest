@@ -1,8 +1,8 @@
 {
   "name": "unibest",
   "type": "module",
-  "version": "3.18.2",
-  "unibest-version": "3.18.2",
+  "version": "3.18.3",
+  "unibest-version": "3.18.3",
   "update-time": "2025-09-30",
   "description": "unibest - 最好的 uniapp 开发模板",
   "generate-time": "用户创建项目时生成",
@@ -35,7 +35,7 @@
     "dev:app-android": "uni -p app-android",
     "dev:app-ios": "uni -p app-ios",
     "dev:custom": "uni -p",
-    "dev": "node --experimental-loader ./scripts/window-path-loader.js node_modules/@dcloudio/vite-plugin-uni/bin/uni.js",
+    "dev": "uni",
     "dev:test": "uni --mode test",
     "dev:prod": "uni --mode production",
     "dev:h5": "uni",
@@ -169,8 +169,17 @@
     "vite-plugin-restart": "^1.0.0",
     "vue-tsc": "^3.0.8"
   },
+  "pnpm": {
+    "overrides": {
+      "unconfig": "7.3.2"
+    }
+  },
+  "overrides": {
+    "unconfig": "7.3.2"
+  },
   "resolutions": {
-    "bin-wrapper": "npm:bin-wrapper-china"
+    "bin-wrapper": "npm:bin-wrapper-china",
+    "unconfig": "7.3.2"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged --allow-empty"
