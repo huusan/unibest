@@ -2,7 +2,6 @@
 import { isApp, isAppAndroid, isAppHarmony, isAppIOS, isAppPlus, isH5, isMpWeixin, isWeb } from '@uni-helper/uni-env'
 import { LOGIN_PAGE } from '@/router/config'
 import { useTokenStore } from '@/store'
-import { tabbarStore } from '@/tabbar/store'
 
 definePage({
   style: {
@@ -25,7 +24,7 @@ function gotoLogin() {
     return
   }
   uni.navigateTo({
-    url: `${LOGIN_PAGE}?redirect=${encodeURIComponent('/pages/about/about?a=1&b=2')}`,
+    url: `${LOGIN_PAGE}?redirect=${encodeURIComponent('/pages-sub/about/about?a=1&b=2')}`,
   })
 }
 function logout() {
@@ -38,16 +37,11 @@ function logout() {
   })
 }
 
-function gotoTabbar() {
-  uni.switchTab({
-    url: '/pages/index/index',
+function gotoScroll() {
+  uni.navigateTo({
+    url: '/pages-sub/demo/scroll',
   })
 }
-// #region setTabbarBadge
-function setTabbarBadge() {
-  tabbarStore.setTabbarItemBadge(1, 100)
-}
-// #endregion
 
 function gotoAlova() {
   uni.navigateTo({
@@ -112,14 +106,15 @@ onShow(() => {
     <RequestComp />
     <VBindCss />
     <view class="mb-6 h-1px bg-#eee" />
+    <view class="mb-2 text-center">
+      <button type="primary" size="mini" class="w-240px" @click="gotoScroll">
+        下拉刷新和下拉加载更多
+      </button>
+      <view>简单hooks（非z-paging组件）</view>
+    </view>
     <view class="text-center">
       <button type="primary" size="mini" class="w-160px" @click="gotoAlova">
         前往 alova 示例页面
-      </button>
-    </view>
-    <view class="text-center">
-      <button type="primary" size="mini" class="w-160px" @click="gotoTabbar">
-        切换tabbar
       </button>
     </view>
     <view class="text-center">

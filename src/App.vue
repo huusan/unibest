@@ -1,19 +1,16 @@
 <script setup lang="ts">
 import { onHide, onLaunch, onShow } from '@dcloudio/uni-app'
-import { isMp } from '@uni-helper/uni-env'
 import { navigateToInterceptor } from '@/router/interceptor'
-import { LOGIN_PAGE_ENABLE_IN_MP } from './router/config'
-import { useTokenStore } from './store'
 
 onLaunch(async (options) => {
   console.log('App Launch', options)
-  if (isMp && !LOGIN_PAGE_ENABLE_IN_MP) {
-    const tokenStore = useTokenStore()
-    if (!tokenStore.hasLogin) {
-      console.log('用户未登录，进行登录操作');
-      await tokenStore.wxLogin()
-    }
-  }
+  // if (isMp && !LOGIN_PAGE_ENABLE_IN_MP) {
+  // const tokenStore = useTokenStore()
+  // if (!tokenStore.hasLogin) {
+  //   console.log('用户未登录，进行登录操作');
+  //   await tokenStore.wxLogin()
+  // }
+  // }
 })
 
 onShow((options) => {

@@ -88,6 +88,7 @@ declare global {
   const useManualTheme: typeof import('../hooks/useManualTheme')['useManualTheme']
   const useModel: typeof import('vue')['useModel']
   const useRequest: typeof import('../hooks/useRequest')['default']
+  const useScroll: typeof import('../hooks/useScroll')['useScroll']
   const useSlots: typeof import('vue')['useSlots']
   const useTabbar: typeof import('../hooks/useTabbar')['useTabbar']
   const useTemplateRef: typeof import('vue')['useTemplateRef']
@@ -197,6 +198,7 @@ declare module 'vue' {
     readonly useId: UnwrapRef<typeof import('vue')['useId']>
     readonly useManualTheme: UnwrapRef<typeof import('../hooks/useManualTheme')['useManualTheme']>
     readonly useModel: UnwrapRef<typeof import('vue')['useModel']>
+    readonly useScroll: UnwrapRef<typeof import('../hooks/useScroll')['useScroll']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useTemplateRef: UnwrapRef<typeof import('vue')['useTemplateRef']>
     readonly useTheme: UnwrapRef<typeof import('../hooks/useTheme')['useTheme']>

@@ -33,12 +33,6 @@ export const nativeTabbarList: NativeTabBarItem[] = [
     text: '首页',
   },
   {
-    iconPath: 'static/tabbar/example.png',
-    selectedIconPath: 'static/tabbar/exampleHL.png',
-    pagePath: 'pages/about/about',
-    text: '关于',
-  },
-  {
     iconPath: 'static/tabbar/personal.png',
     selectedIconPath: 'static/tabbar/personalHL.png',
     pagePath: 'pages/me/me',
@@ -73,42 +67,13 @@ export const customTabbarList: CustomTabBarItem[] = [
     // badge: 'dot',
   },
   {
-    text: '关于',
-    pagePath: 'pages/about/about',
-    // 注意 unocss 图标需要如下处理：（二选一）
-    // 1）在fg-tabbar.vue页面上引入一下并注释掉（见tabbar/index.vue代码第2行）
-    // 2）配置到 unocss.config.ts 的 safelist 中
-    iconType: 'unocss',
-    icon: 'i-solar-user-bold',
-  },
-
-  {
-    text: '添加',
-    pagePath: 'pages/login/register',
-    // 注意 unocss 图标需要如下处理：（二选一）
-    // 1）在fg-tabbar.vue页面上引入一下并注释掉（见tabbar/index.vue代码第2行）
-    // 2）配置到 unocss.config.ts 的 safelist 中
-    iconType: 'unocss',
-    icon: 'i-solar-add-circle-bold',
-    // badge: 10,
-    isBulge: true,
-  },
-  {
-    text: '登录',
-    pagePath: 'pages/about/alova',
-    // 注意 unocss 图标需要如下处理：（二选一）
-    // 1）在fg-tabbar.vue页面上引入一下并注释掉（见tabbar/index.vue代码第2行）
-    // 2）配置到 unocss.config.ts 的 safelist 中
-    iconType: 'uiLib',
-    icon: 'home',
-    // badge: 10,
-  },
-  {
     pagePath: 'pages/me/me',
     text: '我的',
+    // 1）在fg-tabbar.vue页面上引入一下并注释掉（见tabbar/index.vue代码第2行）
+    // 2）配置到 unocss.config.ts 的 safelist 中
     iconType: 'unocss',
     icon: 'i-carbon-user',
-    // badge: 100,
+    // badge: 10,
   },
   // 其他类型演示
   // 1、uiLib

@@ -16,8 +16,8 @@ definePage({
   },
 })
 
-  const themeStore = useThemeStore()
-  const manualThemeStore = useManualThemeStore()
+const themeStore = useThemeStore()
+const manualThemeStore = useManualThemeStore()
 
 const description = ref(
   'unibest 是一个集成了多种工具和技术的 uniapp 开发模板，由 uniapp + Vue3 + Ts + Vite5 + UnoCss + VSCode 构建，模板具有代码提示、自动格式化、统一配置、代码片段等功能，并内置了许多常用的基本组件和基本功能，让你编写 uniapp 拥有 best 体验。',
@@ -27,10 +27,18 @@ console.log('index/index 首页打印了')
 onLoad(() => {
   console.log('测试 uni API 自动引入: onLoad')
 })
+
+// #region gotoAbout
+function gotoAbout() {
+  uni.navigateTo({
+    url: '/pages-sub/about/about',
+  })
+}
+// #endregion
 </script>
 
 <template>
-  <wd-navbar title="首页" placeholder  safe-area-inset-top fixed></wd-navbar>
+  <wd-navbar title="首页" placeholder safe-area-inset-top fixed />
   <view class="px-4 pt-2" :style="{ marginTop: `${safeAreaInsets?.top}px` }">
     <view class="mt-10">
       <image src="/static/logo.svg" alt="" class="mx-auto block h-28 w-28" />
@@ -43,7 +51,8 @@ onLoad(() => {
         设置暗黑/浅色主题
       </wd-button>
       <wd-button type="primary" class="ml-2"
-        @click="useGlobalLoading().loading({ msg: '这是一个全局Loading提示' ,duration: 2000})">
+                 @click="useGlobalLoading().loading({ msg: '这是一个全局Loading提示', duration: 2000 })"
+      >
         设置暗黑/浅色主题
       </wd-button>
     </view>
@@ -104,7 +113,8 @@ onLoad(() => {
 
     <view class="mt-4 text-center">
       <wd-button type="primary" class="ml-2"
-        @click="manualThemeStore.setCurrentThemeColor({value: 'blue', name: '天空蓝', primary: '#007AFF'})">
+                 @click="manualThemeStore.setCurrentThemeColor({ value: 'blue', name: '天空蓝', primary: '#007AFF' })"
+      >
         设置主题变量
       </wd-button>
     </view>
@@ -118,6 +128,11 @@ onLoad(() => {
       UI组件官网：<text class="text-green-500">
         https://wot-design-uni.cn
       </text>
+    </view>
+    <view class="mt-4 text-center">
+      <wd-button type="primary" class="ml-2" @click="gotoAbout">
+        前往示例页
+      </wd-button>
     </view>
     <view class="h-6" />
   </view>
