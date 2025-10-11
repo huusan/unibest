@@ -45,7 +45,7 @@ function gotoScroll() {
 
 function gotoAlova() {
   uni.navigateTo({
-    url: '/pages/about/alova',
+    url: '/pages-sub/about/alova',
   })
 }
 function gotoSubPage() {
