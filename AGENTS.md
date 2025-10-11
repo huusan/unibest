@@ -3,11 +3,13 @@ trigger: always_on
 alwaysApply: true
 ---
 不要修复lint错误
-不要修复prettier问题
 无需导入wot ui和vue 组件 已经内置
-优先使用unocss
-优先使用wot ui组件
-优先使用原子化类名
+优先使用unocs优先使用原子化类名
+新增的mdi图标都要在确保在uno.config.ts的safelist里有,没有就加上
+字体颜色 text-gray-700
+暗黑模式字体颜色  dark:text-[var(--wot-dark-color)]
+暗黑模式背景颜色  dark:bg-[var(--wot-dark-background)]
+优先使用wot ui组件 不使用wd-cell wd-cell-group 使用view
 
 # unibest 项目概览
 
@@ -73,7 +75,7 @@ alwaysApply: true
 ## 页面开发
 - 页面文件放在 [src/pages/](mdc:src/pages/) 目录下
 - 使用约定式路由，文件名即路由路径
-- 页面配置在仅需要在 `route-block` 中配置标题等内容即可，会自动生成到 `pages.json` 中
+- 页面配置在仅需要在 definePage中配置标题等内容即可，会自动生成到 `pages.json` 中
 
 ## 组件开发
 - 组件文件放在 [src/components/](mdc:src/components/) 目录下

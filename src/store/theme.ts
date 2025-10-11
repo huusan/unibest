@@ -20,26 +20,39 @@ export const useThemeStore = defineStore('theme', () => {
 
   /** 主题变量 */
   const themeVars = ref<ThemeState['themeVars']>({
-    darkBackground: '#201f24',
-    darkBackground2: '#141318',
+    // tabbar navbar
+    darkBackground: '#141b2a',
+    // bg
+    darkBackground2: '#1c2533',
     darkBackground3: '#242424',
-    darkBackground4: '#2f2f2f',
+    // search
+    darkBackground4: '#1c2533',
     darkBackground5: '#3d3d3d',
     darkBackground6: '#4a4a4a',
     darkBackground7: '#606060',
+    // 暗黑字体
     darkColor: '#ffffff',
     darkColor2: '#e0e0e0',
     darkColor3: '#a0a0a0',
+    colorBg: '#f3f5f6',
     colorTheme: currentThemeColor.value.primary,
-    colorBg: '#ffffff',
     tabbarInactiveColor: '#999',
     tabbarItemIconSize: '24px',
     tabbarItemTitleFontSize: '10px',
+    navbarBackground: '#ffffff',
     searchInputBg: '#dce5ef',
     searchInputHeight: '40px',
     progressPadding: '0',
     cellWrapperPadding: '0',
     cellPadding: '0',
+    // 字体颜色
+    // colorWhite: '#ffffff',
+    // colorBlack: '#000000',
+
+    inputBg: '#e0e0e0',
+    inputBorderColor: '#e0e0e0',
+    inputCellBorderColor: '#e0e0e0',
+    textareaBg: '#e0e0e0',
   })
 
   /** 是否暗黑模式 */
