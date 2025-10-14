@@ -27,23 +27,21 @@ function handleClickBulge() {
   })
 }
 
-function handleClick(index: number) {
+function handleClick(value: { value: number }) {
+  const index = value.value
   // 点击原来的不做操作
   if (index === tabbarStore.curIdx) {
     return
   }
-  if (tabbarList[index].isBulge) {
+  const item = tabbarList[index]
+  if (item?.isBulge) {
     handleClickBulge()
     return
   }
-  const url = tabbarList[index].pagePath
+  const url = item.pagePath
   tabbarStore.setCurIdx(index)
-  if (tabbarCacheEnable) {
-    uni.switchTab({ url })
-  }
-  else {
-    uni.navigateTo({ url })
-  }
+  const action = tabbarCacheEnable ? uni.switchTab : uni.navigateTo
+  action({ url })
 }
 // #ifndef MP-WEIXIN || MP-ALIPAY
 // 因为有了 custom:true， 微信里面不需要多余的hide操作
@@ -75,11 +73,6 @@ onMounted(() => {
   })
 })
 // #endif
-const activeColor = 'var(--wot-color-theme, #1890ff)'
-const inactiveColor = '#666'
-function getColorByIndex(index: number) {
-  return tabbarStore.curIdx === index ? activeColor : inactiveColor
-}
 
 function getImageByIndex(index: number, item: CustomTabBarItem) {
   if (!item.iconActive) {

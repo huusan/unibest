@@ -3,13 +3,16 @@ trigger: always_on
 alwaysApply: true
 ---
 不要修复lint错误
-无需导入wot ui和vue 组件 已经内置
+无需导入wot ui和vue 组件 已经内置 优先使用defineModel 少使用defineEmits
 优先使用unocs优先使用原子化类名
 新增的mdi图标都要在确保在uno.config.ts的safelist里有,没有就加上
 字体颜色 text-gray-700
 暗黑模式字体颜色  dark:text-[var(--wot-dark-color)]
 暗黑模式背景颜色  dark:bg-[var(--wot-dark-background)]
 优先使用wot ui组件 不使用wd-cell wd-cell-group 使用view
+自定义组件都在`src/components/`下 使用时无需导入 要声明名称
+命令行使用PowerShell
+使用useGlobalMessage要在success里message.close()
 
 # unibest 项目概览
 
