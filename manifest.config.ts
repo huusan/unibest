@@ -134,6 +134,7 @@ export default defineManifestConfig({
     // styleIsolation: 'shared',
     usingComponents: true,
     // __usePrivacyCheck__: true,
+    darkmode: true,
   },
   'mp-alipay': {
     usingComponents: true,

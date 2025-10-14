@@ -1,5 +1,6 @@
 import type { ThemeColorOption, ThemeMode, ThemeState } from '@/hooks/types/theme'
 import { defineStore } from 'pinia'
+import { themeColorOptions } from '@/hooks/types/theme'
 
 /**
  * 完整版主题状态管理
@@ -16,7 +17,7 @@ export const useThemeStore = defineStore('theme', () => {
   const hasUserSet = ref<boolean>(false)
 
   /** 当前主题色 */
-  const currentThemeColor = ref<ThemeColorOption>({ value: 'green', name: '薄荷绿', primary: '#07C160' })
+  const currentThemeColor = ref<ThemeColorOption>(themeColorOptions[0])
 
   /** 主题变量 */
   const themeVars = ref<ThemeState['themeVars']>({
