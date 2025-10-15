@@ -12,7 +12,7 @@ alwaysApply: true
 优先使用wot ui组件 不使用wd-cell wd-cell-group 使用view
 自定义组件都在`src/components/`下 使用时无需导入 要声明名称
 命令行使用PowerShell
-使用useGlobalMessage要在success里message.close()
+使用useGlobalMessage要记得message.close()
 
 # unibest 项目概览
 

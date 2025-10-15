@@ -21,13 +21,17 @@ export const useGlobalMessage = defineStore('global-message', {
   actions: {
     show(option: GlobalMessageOptions | string) {
       this.currentPage = currRoute()?.path || ''
+      const optionObj = CommonUtil.isString(option) ? { title: option } : option
+
       this.messageOptions = {
-        ...(CommonUtil.isString(option) ? { title: option } : option),
+        ...optionObj,
         cancelButtonProps: {
           round: false,
+          ...optionObj.cancelButtonProps,
         },
         confirmButtonProps: {
           round: false,
+          ...optionObj.confirmButtonProps,
         },
       }
     },

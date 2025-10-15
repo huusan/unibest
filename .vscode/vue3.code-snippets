@@ -20,8 +20,15 @@
     "prefix": "v3",
     "body": [
       "<script lang=\"ts\" setup>",
+      " defineOptions({",
+      "   addGlobalClass: true,",
+      "   virtualHost: true,",
+      "   styleIsolation: 'shared',",
+      " })",
+
       "definePage({",
       "  style: {",
+      "    navigationStyle: 'default',",
       "    navigationBarTitleText: '$1',",
       "  },",
       "})",

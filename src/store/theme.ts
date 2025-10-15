@@ -22,18 +22,18 @@ export const useThemeStore = defineStore('theme', () => {
   /** 主题变量 */
   const themeVars = ref<ThemeState['themeVars']>({
     // tabbar navbar
-    darkBackground: '#141b2a',
-    // bg
-    darkBackground2: '#1c2533',
+    darkBackground: '#1c1e1f',
+    // bg tabs-bg popup
+    darkBackground2: '#1f2528',
     darkBackground3: '#242424',
     // search
-    darkBackground4: '#1c2533',
+    darkBackground4: '#1c1e1f',
     darkBackground5: '#3d3d3d',
     darkBackground6: '#4a4a4a',
     darkBackground7: '#606060',
     // 暗黑字体
     darkColor: '#ffffff',
-    darkColor2: '#e0e0e0',
+    darkColor2: '#a0a0a0',
     darkColor3: '#a0a0a0',
     colorBg: '#f3f5f6',
     colorTheme: currentThemeColor.value.primary,
@@ -65,7 +65,7 @@ export const useThemeStore = defineStore('theme', () => {
   const setNavigationBarColor = () => {
     uni.setNavigationBarColor({
       frontColor: theme.value === 'light' ? '#000000' : '#ffffff',
-      backgroundColor: theme.value === 'light' ? '#ffffff' : '#000000',
+      backgroundColor: theme.value === 'light' ? themeVars.value.navbarBackground : themeVars.value.darkBackground,
     })
   }
 
