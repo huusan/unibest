@@ -135,3 +135,9 @@ function gotoAbout() {
     <view class="h-6" />
   </view>
 </template>
+
+<style lang="scss" scoped>
+:deep(.wot-theme-dark .wd-navbar.is-border::after) {
+  background: var(--wot-dark-background) !important;
+}
+</style>
