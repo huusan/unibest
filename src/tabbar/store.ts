@@ -5,7 +5,7 @@ import { reactive } from 'vue'
 import { isNeedLoginMode, LOGIN_PAGE_ENABLE_IN_MP } from '@/router/config'
 import { isDev, judgeIsExcludePath } from '@/router/interceptor'
 import { useTokenStore } from '@/store/token'
-import { tabbarList as _tabbarList, customTabbarEnable } from './config'
+import { tabbarList as _tabbarList, customTabbarEnable, selectedTabbarStrategy, TABBAR_STRATEGY_MAP } from './config'
 
 // TODO 1/2: 中间的鼓包tabbarItem的开关
 const BULGE_ENABLE = false
@@ -26,6 +26,9 @@ if (customTabbarEnable && BULGE_ENABLE) {
 }
 
 export function isPageTabbar(path: string) {
+  if (selectedTabbarStrategy === TABBAR_STRATEGY_MAP.NO_TABBAR) {
+    return false
+  }
   const _path = path.split('?')[0]
   return tabbarList.some(item => item.pagePath === _path)
 }
