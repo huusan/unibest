@@ -123,8 +123,20 @@
   "debug.javascript.defaultRuntimeExecutable": {
     "pwa-node": "c:\\users\\27536\\appdata\\local\\mise\\shims\\node"
   },
-  "typescript.experimental.useTsgo": false,
+  "typescript.experimental.useTsgo": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
   "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[yaml]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   }
 }
