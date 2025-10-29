@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CustomTabBarItem } from './config'
+import type { CustomTabBarItem } from './types'
 import { computed } from 'vue'
 import { useThemeStore } from '@/store/theme'
 import { customTabbarEnable, needHideNativeTabbar, tabbarCacheEnable } from './config'

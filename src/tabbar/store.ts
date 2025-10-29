@@ -1,4 +1,4 @@
-import type { CustomTabBarItem, CustomTabBarItemBadge } from './config'
+import type { CustomTabBarItem, CustomTabBarItemBadge } from './types'
 import { isMp } from '@uni-helper/uni-env'
 
 import { reactive } from 'vue'
