@@ -96,7 +96,7 @@ const itemProps = computed(() => {
 
 <template>
   <block v-if="customTabbarEnable">
-    <wd-tabbar :model-value="tabbarStore.curIdx" bordered safe-area-inset-bottom placeholder fixed shape="round"
+    <wd-tabbar :model-value="tabbarStore.curIdx" bordered safe-area-inset-bottom placeholder fixed
                @change="handleClick"
     >
       <block v-for="(item, idx) in tabbarList" :key="item.pagePath">
