@@ -123,7 +123,7 @@
   "debug.javascript.defaultRuntimeExecutable": {
     "pwa-node": "c:\\users\\27536\\appdata\\local\\mise\\shims\\node"
   },
-  "typescript.experimental.useTsgo": false,
+  "typescript.experimental.useTsgo": true,
   "[javascript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },

@@ -1,21 +1,6 @@
 <script setup lang="ts">
 import { onHide, onLaunch, onShow } from '@dcloudio/uni-app'
-import { focusManager, onlineManager } from '@tanstack/vue-query'
 import { navigateToInterceptor } from '@/router/interceptor'
-import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
-
-uni.getNetworkType({
-  success: ({ networkType }) => {
-    onlineManager.setOnline(networkType !== 'none')
-  },
-})
-uni.onNetworkStatusChange(({ isConnected, networkType }) => {
-  // 优先使用 isConnected 判断网络状态
-  // 回退到 networkType 判断
-  onlineManager.setOnline(
-    isConnected != null ? isConnected : networkType !== 'none',
-  )
-})
 
 onLaunch(async (options) => {
   console.log('App Launch', options)
@@ -30,7 +15,6 @@ onLaunch(async (options) => {
 
 onShow((options) => {
   console.log('App Show', options)
-  focusManager.setFocused(true)
   // 处理直接进入页面路由的情况：如h5直接输入路由、微信小程序分享后进入等
   // https://github.com/unibest-tech/unibest/issues/192
   if (options?.path) {
@@ -42,7 +26,6 @@ onShow((options) => {
 })
 onHide(() => {
   console.log('App Hide')
-  focusManager.setFocused(false)
 })
 </script>
 

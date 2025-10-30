@@ -32,11 +32,6 @@ function gotoAbout() {
     url: '/pages-sub/about/about',
   })
 }
-function gotoOrpc() {
-  uni.navigateTo({
-    url: '/pages-sub/demo/orpc',
-  })
-}
 // #endregion
 </script>
 
@@ -46,89 +41,99 @@ function gotoOrpc() {
     <view class="mt-10">
       <image src="/static/logo.svg" alt="" class="mx-auto block h-28 w-28" />
     </view>
-    <view class="flex items-center justify-center">
-      <view class="mt-4 text-center">
-        <wd-button type="primary" class="ml-2"
-                   @click="themeStore.setCurrentThemeColor({ value: 'blue', name: '天空蓝', primary: '#007AFF' })"
-        >
-          设置主题变量
-        </wd-button>
-      </view>
-      <view class="mt-4 text-center">
-        <wd-button type="primary" class="ml-2" @click="themeStore.toggleTheme()">
-          设置暗黑/浅色主题
-        </wd-button>
-      </view>
+    <view class="mt-4 text-center">
+      <wd-button type="primary" class="ml-2" @click="useGlobalToast().success({ msg: '这是一个全局Toast提示' })">
+        设置暗黑/浅色主题
+      </wd-button>
+      <wd-button type="primary" class="ml-2" @click="useGlobalMessage().alert({ msg: '这是一个全局Message提示' })">
+        设置暗黑/浅色主题
+      </wd-button>
+      <wd-button type="primary" class="ml-2"
+                 @click="useGlobalLoading().loading({ msg: '这是一个全局Loading提示', duration: 2000 })"
+      >
+        设置暗黑/浅色主题
+      </wd-button>
     </view>
-    <view class="flex items-center justify-center">
-      <view class="mt-4 text-center">
-        <wd-button type="primary" class="ml-2" @click="gotoAbout">
-          前往示例页
-        </wd-button>
-      </view>
 
-      <view class="mt-4 text-center">
-        <wd-button type="primary" class="ml-2" @click="gotoOrpc">
-          前往oRPC示例页
-        </wd-button>
-      </view>
-      <view class="h-6" />
+    <view class="mt-4 text-center text-4xl text-[#d14328]">
+      unibest
     </view>
-  </view>
+    <view class="mb-8 mt-2 text-center text-2xl">
+      最好用的 uniapp 开发模板
+    </view>
 
-  <view class="mt-4 text-center text-4xl text-[#d14328]">
-    unibest
-  </view>
-  <view class="mb-8 mt-2 text-center text-2xl">
-    最好用的 uniapp 开发模板
-  </view>
+    <view class="m-auto mb-2 max-w-100 text-justify indent text-4">
+      {{ description }}
+    </view>
+    <view class="mt-4 text-center">
+      作者：
+      <text class="text-green-500">
+        菲鸽
+      </text>
+    </view>
+    <view class="mt-4 text-center">
+      官网地址：
+      <text class="text-green-500">
+        https://unibest.tech
+      </text>
+    </view>
 
-  <view class="m-auto mb-2 max-w-100 text-justify indent text-4">
-    {{ description }}
-  </view>
-  <view class="mt-4 text-center">
-    作者：
-    <text class="text-green-500">
-      菲鸽
-    </text>
-  </view>
-  <view class="mt-4 text-center">
-    官网地址：
-    <text class="text-green-500">
-      https://unibest.tech
-    </text>
-  </view>
-
-  <!-- #ifdef H5 -->
-  <view class="mt-4 text-center">
-    <a href="https://unibest.tech/base/3-plugin" target="_blank" class="text-green-500">
+    <!-- #ifdef H5 -->
+    <view class="mt-4 text-center">
+      <a href="https://unibest.tech/base/3-plugin" target="_blank" class="text-green-500">
+        新手请看必看章节1：
+      </a>
+    </view>
+    <!-- #endif -->
+    <!-- #ifdef MP-WEIXIN -->
+    <view class="mt-4 text-center">
       新手请看必看章节1：
-    </a>
-  </view>
-  <!-- #endif -->
-  <!-- #ifdef MP-WEIXIN -->
-  <view class="mt-4 text-center">
-    新手请看必看章节1：
-    <text class="text-green-500">
-      https://unibest.tech/base/3-plugin
-    </text>
-  </view>
-  <!-- #endif -->
-  <!-- #ifdef H5 -->
-  <view class="mt-4 text-center">
-    <a href="https://unibest.tech/base/14-faq" target="_blank" class="text-green-500">
+      <text class="text-green-500">
+        https://unibest.tech/base/3-plugin
+      </text>
+    </view>
+    <!-- #endif -->
+    <!-- #ifdef H5 -->
+    <view class="mt-4 text-center">
+      <a href="https://unibest.tech/base/14-faq" target="_blank" class="text-green-500">
+        新手请看必看章节2：
+      </a>
+    </view>
+    <!-- #endif -->
+    <!-- #ifdef MP-WEIXIN -->
+    <view class="mt-4 text-center">
       新手请看必看章节2：
-    </a>
+      <text class="text-green-500">
+        https://unibest.tech/base/14-faq
+      </text>
+    </view>
+    <!-- #endif -->
+
+    <view class="mt-4 text-center">
+      <wd-button type="primary" class="ml-2"
+                 @click="themeStore.setCurrentThemeColor({ value: 'blue', name: '天空蓝', primary: '#007AFF' })"
+      >
+        设置主题变量
+      </wd-button>
+    </view>
+    <view class="mt-4 text-center">
+      <wd-button type="primary" class="ml-2" @click="themeStore.toggleTheme()">
+        设置暗黑/浅色主题
+      </wd-button>
+    </view>
+
+    <view class="mt-4 text-center">
+      UI组件官网：<text class="text-green-500">
+        https://wot-design-uni.cn
+      </text>
+    </view>
+    <view class="mt-4 text-center">
+      <wd-button type="primary" class="ml-2" @click="gotoAbout">
+        前往示例页
+      </wd-button>
+    </view>
+    <view class="h-6" />
   </view>
-  <!-- #endif -->
-  <!-- #ifdef MP-WEIXIN -->
-  <view class="mt-4 text-center">
-    新手请看必看章节2：
-    <text class="text-green-500">
-      https://unibest.tech/base/14-faq
-    </text>
-  </view>
-  <!-- #endif -->
 </template>
 
 <style lang="scss" scoped>
