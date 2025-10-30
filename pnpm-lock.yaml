@@ -18,6 +18,9 @@ importers:
       '@alova/shared':
         specifier: ^1.3.1
         version: 1.3.1
+      '@chenroy/fetch-event-source-miniprogram':
+        specifier: ^1.0.4
+        version: 1.0.4
       '@dcloudio/uni-app':
         specifier: 3.0.0-4070620250821001
         version: 3.0.0-4070620250821001(@dcloudio/types@3.4.26)(postcss@8.5.6)(rollup@4.50.0)(vue@3.4.21(typescript@5.9.3))
@@ -66,6 +69,18 @@ importers:
       '@dcloudio/uni-quickapp-webview':
         specifier: 3.0.0-4070620250821001
         version: 3.0.0-4070620250821001(postcss@8.5.6)(rollup@4.50.0)(vue@3.4.21(typescript@5.9.3))
+      '@orpc/client':
+        specifier: ^1.10.2
+        version: 1.10.2
+      '@orpc/contract':
+        specifier: ^1.10.2
+        version: 1.10.2
+      '@orpc/tanstack-query':
+        specifier: ^1.10.2
+        version: 1.10.2(@orpc/client@1.10.2)(@tanstack/query-core@5.90.5)
+      '@tanstack/vue-query':
+        specifier: ^5.90.5
+        version: 5.90.5(vue@3.4.21(typescript@5.9.3))
       abortcontroller-polyfill:
         specifier: ^1.7.8
         version: 1.7.8
@@ -90,12 +105,18 @@ importers:
       vue-router:
         specifier: 4.5.1
         version: 4.5.1(vue@3.4.21(typescript@5.9.3))
+      web-streams-polyfill:
+        specifier: ^4.2.0
+        version: 4.2.0
       wot-design-uni:
         specifier: ^1.13.0
         version: 1.13.0(vue@3.4.21(typescript@5.9.3))
       z-paging:
         specifier: 2.8.8
         version: 2.8.8
+      zod:
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@binbinji/vite-plugin-component-placeholder':
         specifier: ^0.0.12
@@ -919,6 +940,10 @@ packages:
   '@binbinji/vite-plugin-component-placeholder@0.0.12':
     resolution: {integrity: sha512-cnxNuo9K39sv3AkGoDZIMheTdXvWPOOVv/qdpTP0l6okak2tI2CVuy4dvnO/ytb2xhT0U29m+bkfrN1No7Io4Q==}
 
+  '@chenroy/fetch-event-source-miniprogram@1.0.4':
+    resolution: {integrity: sha512-c4/xLCn66xBOD8oBhHnvV02uRImY1whlFmUiWfV+DOVh+dZcyB7IdYpMeNVIpLOFyEjDSC+WPHGOYUDawoWWlg==}
+    engines: {node: '>=16.15'}
+
   '@clack/core@0.5.0':
     resolution: {integrity: sha512-p3y0FIOwaYRUPRcMO7+dlmLh8PSRcrjuTndsiA0WAFbWES0mLZlrjVoBRZ9DzkPFJZG6KGkJmoEAY0ZcVWTkow==}
 
@@ -1703,6 +1728,35 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
+  '@orpc/client@1.10.2':
+    resolution: {integrity: sha512-NxDtHfL/rhk7wf2PI6raRxs04nYQ3Kl50TRL8jXWL4PjKMoJ56SYNSDuVazXRgqCtY6qjinRw7qZgrr5GWBZIQ==}
+
+  '@orpc/contract@1.10.2':
+    resolution: {integrity: sha512-+48MOIY/DP48cPbDFSW0TFdS37GIFV7zPXY3/8RumP+g5jMLqD6Rfdu61junqkHWm7mgTzjBTo7zIsZ/ha/lzw==}
+
+  '@orpc/shared@1.10.2':
+    resolution: {integrity: sha512-TIH4sohjVJQ9UOSHrqJm+psCX3P6DVnzzB6ltohBMUwPXWvZgk8TTh4K3cMw2HhofvLylUtGe61uf5ReUiECLA==}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.9.0'
+    peerDependenciesMeta:
+      '@opentelemetry/api':
+        optional: true
+
+  '@orpc/standard-server-fetch@1.10.2':
+    resolution: {integrity: sha512-1aEBLV8vTN+wgu76ukx5AuFdhp+LesSq4FUzITBzJ/Y0GuiCCanKH3iWNU6TtrbRR5iNvZG3jOHun9GqkRjlJQ==}
+
+  '@orpc/standard-server-peer@1.10.2':
+    resolution: {integrity: sha512-Kh1dEDT3Hhv+dA+UoftGe3ktTbdDeGQOMARMB9QWGVerJatxQRJbq89iGVY/q4RXOSQgI3Dkp0/irGaCvCXbSw==}
+
+  '@orpc/standard-server@1.10.2':
+    resolution: {integrity: sha512-5HYOkCGb/SuQIWml44dD9ygTDCTnauHEJdxaPMDDQZeDTUSA3lAIS9qZL4np9HEUTvITK6MbihXGVSRWIyr73A==}
+
+  '@orpc/tanstack-query@1.10.2':
+    resolution: {integrity: sha512-Kcl45455JPpXNdCRTKF/ZM89GYGEBDMqxpI97XpiTn1eBZrGxF4vZGIOZx6nogiMpspjx1jf9jgEUu/djcoKFw==}
+    peerDependencies:
+      '@orpc/client': 1.10.2
+      '@tanstack/query-core': '>=5.80.2'
+
   '@pkgr/core@0.1.2':
     resolution: {integrity: sha512-fdDH1LSGfZdTH2sxdpVMw31BanV28K/Gry0cVFxaNP77neJSkd82mM8ErPNYs9e+0O7SdHBLTDzDgwUuy18RnQ==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
@@ -1857,11 +1911,30 @@ packages:
   '@sinonjs/fake-timers@8.1.0':
     resolution: {integrity: sha512-OAPJUAtgeINhh/TAlUID4QTs53Njm7xzddaVlEs/SXwgtiD1tW22zAB/W1wdqfrpmikgaWQ9Fw6Ws+hsiRm5Vg==}
 
+  '@standard-schema/spec@1.0.0':
+    resolution: {integrity: sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA==}
+
   '@stylistic/eslint-plugin@5.4.0':
     resolution: {integrity: sha512-UG8hdElzuBDzIbjG1QDwnYH0MQ73YLXDFHgZzB4Zh/YJfnw8XNsloVtytqzx0I2Qky9THSdpTmi8Vjn/pf/Lew==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=9.0.0'
+
+  '@tanstack/match-sorter-utils@8.19.4':
+    resolution: {integrity: sha512-Wo1iKt2b9OT7d+YGhvEPD3DXvPv2etTusIMhMUoG7fbhmxcXCtIjJDEygy91Y2JFlwGyjqiBPRozme7UD8hoqg==}
+    engines: {node: '>=12'}
+
+  '@tanstack/query-core@5.90.5':
+    resolution: {integrity: sha512-wLamYp7FaDq6ZnNehypKI5fNvxHPfTYylE0m/ZpuuzJfJqhR5Pxg9gvGBHZx4n7J+V5Rg5mZxHHTlv25Zt5u+w==}
+
+  '@tanstack/vue-query@5.90.5':
+    resolution: {integrity: sha512-bTEmgIb6o5BqkoJPNV7ZKKsDHjiVnNydORw1n6S/x0dppb3lTT5KFOotQ5PqZG3OQY+9AwA6RJJN3pEx+9j1Pg==}
+    peerDependencies:
+      '@vue/composition-api': ^1.1.2
+      vue: ^2.6.0 || ^3.3.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
 
   '@tootallnate/once@1.1.2':
     resolution: {integrity: sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==}
@@ -4414,6 +4487,9 @@ packages:
     resolution: {integrity: sha512-7x81NCL719oNbsq/3mh+hVrAWmFuEYUqrq/Iw3kUzH8ReypT9QQ0BLoJS7/G9k6N81XjW4qHWtjWwe/9eLy1EQ==}
     engines: {node: '>=12'}
 
+  openapi-types@12.1.3:
+    resolution: {integrity: sha512-N4YtSYJqghVu4iek2ZUvcN/0aqH1kRDuNqzcycDxhOUpg7GdvLa2F3DgS6yBNhInhv2r/6I0Flkn7CqL8+nIcw==}
+
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
     engines: {node: '>= 0.8.0'}
@@ -4729,6 +4805,10 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
+  radash@12.1.1:
+    resolution: {integrity: sha512-h36JMxKRqrAxVD8201FrCpyeNuUY9Y5zZwujr20fFO77tpUtGa6EZzfKw/3WaiBX95fq7+MpsuMLNdSnORAwSA==}
+    engines: {node: '>=14.18.0'}
+
   range-parser@1.2.1:
     resolution: {integrity: sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==}
     engines: {node: '>= 0.6'}
@@ -4792,6 +4872,9 @@ packages:
   regjsparser@0.12.0:
     resolution: {integrity: sha512-cnE+y8bz4NhMjISKbgeVJtqNbtf5QpjZP+Bslo+UqkIt9QPnX9q095eiRRASJG1/tz6dlNr6Z5NsBiWYokp6EQ==}
     hasBin: true
+
+  remove-accents@0.5.0:
+    resolution: {integrity: sha512-8g3/Otx1eJaVD12e31UbJj1YzdtVvzH85HV7t+9MJYk/u3XmkOUJ5Ys9wQrf9PCPK8+xn4ymzqYCiZl6QWKn+A==}
 
   require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
@@ -5092,6 +5175,10 @@ packages:
   systemjs@6.15.1:
     resolution: {integrity: sha512-Nk8c4lXvMB98MtbmjX7JwJRgJOL8fluecYCfCeYBznwmpOs8Bf15hLM6z4z71EDAhQVrQrI+wt1aLWSXZq+hXA==}
 
+  tagged-tag@1.0.0:
+    resolution: {integrity: sha512-yEFYrVhod+hdNyx7g5Bnkkb0G6si8HJurOoOEgC8B/O0uXLHlaey/65KRv6cuWBNhBgHKAROVpc7QyYqE5gFng==}
+    engines: {node: '>=20'}
+
   tapable@2.2.3:
     resolution: {integrity: sha512-ZL6DDuAlRlLGghwcfmSn9sK3Hr6ArtyudlSAiCqQ6IfE+b+HHbydbYDIG15IfS5do+7XQQBdBiubF/cV2dnDzg==}
     engines: {node: '>=6'}
@@ -5192,6 +5279,10 @@ packages:
   type-fest@0.21.3:
     resolution: {integrity: sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==}
     engines: {node: '>=10'}
+
+  type-fest@5.1.0:
+    resolution: {integrity: sha512-wQ531tuWvB6oK+pchHIu5lHe5f5wpSCqB8Kf4dWQRbOYc9HTge7JL0G4Qd44bh6QuJCccIzL3bugb8GI0MwHrg==}
+    engines: {node: '>=20'}
 
   type-is@1.6.18:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
@@ -5464,6 +5555,10 @@ packages:
   walker@1.0.8:
     resolution: {integrity: sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==}
 
+  web-streams-polyfill@4.2.0:
+    resolution: {integrity: sha512-0rYDzGOh9EZpig92umN5g5D/9A1Kff7k0/mzPSSCY8jEQeYkgRMoY7LhbXtUCWzLCMX0TUE9aoHkjFNB7D9pfA==}
+    engines: {node: '>= 8'}
+
   webidl-conversions@5.0.0:
     resolution: {integrity: sha512-VlZwKPCkYKxQgeSbH5EyngOmRp7Ww7I9rQLERETtf5ofd9pGeswWiOtogpEO850jziPRarreGxn5QIiTqpb2wA==}
     engines: {node: '>=8'}
@@ -5619,6 +5714,9 @@ packages:
   z-paging@2.8.8:
     resolution: {integrity: sha512-l8HWhqlv1TvoNLwbf1fd8rS0zjAoVE6tdEUhMhKrnRXkfHFULIXMbDpljcSr6IyQoMzfWxF4Nqml3+2ZDgjk7g==}
     engines: {HBuilderX: ^3.0.7, uni-app: ^4.07}
+
+  zod@4.1.12:
+    resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -6468,6 +6566,8 @@ snapshots:
       '@rollup/pluginutils': 5.3.0(rollup@4.50.0)
     transitivePeerDependencies:
       - rollup
+
+  '@chenroy/fetch-event-source-miniprogram@1.0.4': {}
 
   '@clack/core@0.5.0':
     dependencies:
@@ -7986,6 +8086,57 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
 
+  '@orpc/client@1.10.2':
+    dependencies:
+      '@orpc/shared': 1.10.2
+      '@orpc/standard-server': 1.10.2
+      '@orpc/standard-server-fetch': 1.10.2
+      '@orpc/standard-server-peer': 1.10.2
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+
+  '@orpc/contract@1.10.2':
+    dependencies:
+      '@orpc/client': 1.10.2
+      '@orpc/shared': 1.10.2
+      '@standard-schema/spec': 1.0.0
+      openapi-types: 12.1.3
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+
+  '@orpc/shared@1.10.2':
+    dependencies:
+      radash: 12.1.1
+      type-fest: 5.1.0
+
+  '@orpc/standard-server-fetch@1.10.2':
+    dependencies:
+      '@orpc/shared': 1.10.2
+      '@orpc/standard-server': 1.10.2
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+
+  '@orpc/standard-server-peer@1.10.2':
+    dependencies:
+      '@orpc/shared': 1.10.2
+      '@orpc/standard-server': 1.10.2
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+
+  '@orpc/standard-server@1.10.2':
+    dependencies:
+      '@orpc/shared': 1.10.2
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+
+  '@orpc/tanstack-query@1.10.2(@orpc/client@1.10.2)(@tanstack/query-core@5.90.5)':
+    dependencies:
+      '@orpc/client': 1.10.2
+      '@orpc/shared': 1.10.2
+      '@tanstack/query-core': 5.90.5
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+
   '@pkgr/core@0.1.2': {}
 
   '@pkgr/core@0.2.9': {}
@@ -8082,6 +8233,8 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 1.8.6
 
+  '@standard-schema/spec@1.0.0': {}
+
   '@stylistic/eslint-plugin@5.4.0(eslint@9.38.0(jiti@2.6.1))':
     dependencies:
       '@eslint-community/eslint-utils': 4.9.0(eslint@9.38.0(jiti@2.6.1))
@@ -8091,6 +8244,20 @@ snapshots:
       espree: 10.4.0
       estraverse: 5.3.0
       picomatch: 4.0.3
+
+  '@tanstack/match-sorter-utils@8.19.4':
+    dependencies:
+      remove-accents: 0.5.0
+
+  '@tanstack/query-core@5.90.5': {}
+
+  '@tanstack/vue-query@5.90.5(vue@3.4.21(typescript@5.9.3))':
+    dependencies:
+      '@tanstack/match-sorter-utils': 8.19.4
+      '@tanstack/query-core': 5.90.5
+      '@vue/devtools-api': 6.6.4
+      vue: 3.4.21(typescript@5.9.3)
+      vue-demi: 0.14.10(vue@3.4.21(typescript@5.9.3))
 
   '@tootallnate/once@1.1.2': {}
 
@@ -11366,6 +11533,8 @@ snapshots:
       is-docker: 2.2.1
       is-wsl: 2.2.0
 
+  openapi-types@12.1.3: {}
+
   optionator@0.9.4:
     dependencies:
       deep-is: 0.1.4
@@ -11655,6 +11824,8 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
+  radash@12.1.1: {}
+
   range-parser@1.2.1: {}
 
   rate-limiter-flexible@5.0.5: {}
@@ -11718,6 +11889,8 @@ snapshots:
   regjsparser@0.12.0:
     dependencies:
       jsesc: 3.0.2
+
+  remove-accents@0.5.0: {}
 
   require-directory@2.1.1: {}
 
@@ -12024,6 +12197,8 @@ snapshots:
 
   systemjs@6.15.1: {}
 
+  tagged-tag@1.0.0: {}
+
   tapable@2.2.3: {}
 
   tapable@2.3.0: {}
@@ -12118,6 +12293,10 @@ snapshots:
   type-detect@4.0.8: {}
 
   type-fest@0.21.3: {}
+
+  type-fest@5.1.0:
+    dependencies:
+      tagged-tag: 1.0.0
 
   type-is@1.6.18:
     dependencies:
@@ -12436,6 +12615,8 @@ snapshots:
     dependencies:
       makeerror: 1.0.12
 
+  web-streams-polyfill@4.2.0: {}
+
   webidl-conversions@5.0.0: {}
 
   webidl-conversions@6.1.0: {}
@@ -12559,5 +12740,7 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   z-paging@2.8.8: {}
+
+  zod@4.1.12: {}
 
   zwitch@2.0.4: {}
