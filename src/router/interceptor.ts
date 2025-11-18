@@ -57,7 +57,7 @@ export const navigateToInterceptor = {
     }
 
     // 处理路由不存在的情况
-    if (getAllPages().every(page => page.path !== path) && path !== '/') {
+    if (path !== '/' && !getAllPages().some(page => page.path !== path)) {
       console.warn('路由不存在:', path)
       uni.navigateTo({ url: NOT_FOUND_PAGE })
       return false // 明确表示阻止原路由继续执行
@@ -105,7 +105,7 @@ export const navigateToInterceptor = {
     if (Object.keys(myQuery).length) {
       fullPath += `?${Object.keys(myQuery).map(key => `${key}=${myQuery[key]}`).join('&')}`
     }
-    const redirectUrl = `${LOGIN_PAGE}?redirect=${encodeURIComponent(fullPath)}`
+    const redirectQuery = `?redirect=${encodeURIComponent(fullPath)}`
 
     // #region 1/2 默认需要登录的情况(白名单策略) ---------------------------
     if (isNeedLoginMode) {
@@ -119,9 +119,9 @@ export const navigateToInterceptor = {
           return true // 明确表示允许路由继续执行
         }
         isNavigating = true
-        isDev && console.log('1 isNeedLogin(白名单策略) redirectUrl:', redirectUrl)
+        isDev && console.log('1 isNeedLogin(白名单策略) redirectUrl:', redirectQuery)
         uni.navigateTo({
-          url: redirectUrl,
+          url: redirectQuery,
           complete: () => { isNavigating = false },
         })
         return false // 明确表示阻止原路由继续执行
@@ -136,11 +136,11 @@ export const navigateToInterceptor = {
       }
       // 不需要登录里面的 EXCLUDE_LOGIN_PATH_LIST 表示黑名单，需要重定向到登录页
       if (judgeIsExcludePath(path)) {
-        isDev && console.log('2 isNeedLogin(黑名单策略) redirectUrl:', redirectUrl)
+        isDev && console.log('2 isNeedLogin(黑名单策略) redirectUrl:', redirectQuery)
         isNavigating = true
 
         uni.navigateTo({
-          url: redirectUrl,
+          url: redirectQuery,
           complete: () => { isNavigating = false },
         })
         return false // 阻止原路由继续执行
