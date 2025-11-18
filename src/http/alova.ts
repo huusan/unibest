@@ -5,9 +5,8 @@ import { isMp } from '@uni-helper/uni-env'
 import { createAlova } from 'alova'
 import { createServerTokenAuthentication } from 'alova/client'
 import VueHook from 'alova/vue'
-import { LOGIN_PAGE_ENABLE_IN_MP } from '@/router/config'
+import { LOGIN_PAGE, LOGIN_PAGE_ENABLE_IN_MP } from '@/router/config'
 import { useTokenStore } from '@/store'
-import { toLoginPage } from '@/utils/toLoginPage'
 import { ContentTypeEnum, ResultEnum, ShowMessage } from './tools/enum'
 
 // 配置动态Tag
@@ -59,8 +58,8 @@ const { onAuthRequired, onResponseRefreshToken } = createServerTokenAuthenticati
         }
         else {
           // 切换到登录页
-          toLoginPage({ mode: 'reLaunch' })
-
+          uni.reLaunch({ url: LOGIN_PAGE })
+          // 并抛出错误
           throw error
         }
       }
